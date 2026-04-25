@@ -212,8 +212,8 @@ function ChatContent() {
 
   return (
     <div
-      className="flex flex-col bg-background"
-      style={{ height: "calc(100vh - 72px)", marginTop: 72 }}
+      className="fixed inset-0 flex flex-col bg-background z-[60]"
+      style={{ height: "100dvh" }}
     >
       {/* ── Header ── */}
       <div className="flex-shrink-0 px-4 py-3 glass-morphism border-b border-white/5 flex items-center gap-3">
