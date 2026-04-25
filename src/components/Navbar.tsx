@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useAuthStore } from "@/store/useAuthStore";
-import { Search, ShoppingBag, User as UserIcon, LogOut, Menu, Heart, ShieldAlert, X } from "lucide-react";
+import { Search, ShoppingBag, User as UserIcon, LogOut, Menu, Heart, ShieldAlert, X, Bell, Moon, Sun } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
 import { NotificationBell } from "./NotificationBell";
@@ -28,51 +28,62 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-morphism px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
-      <Link href="/" className="flex items-center gap-2 md:gap-3 group">
+      {/* Logo Section */}
+      <Link href="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
         <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
           <img src="/logo.png" alt="EduTrade Logo" className="w-full h-full object-cover" />
         </div>
         <span className="text-lg md:text-xl font-black tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">EduTrade</span>
       </Link>
 
+      {/* Desktop Navigation */}
       <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-400">
         <Link href="/products" className="hover:text-white transition-colors">Marketplace</Link>
         <Link href="/how-it-works" className="hover:text-white transition-colors">How it works</Link>
         <Link href="/about" className="hover:text-white transition-colors">About</Link>
       </div>
 
-      <div className="flex items-center gap-3">
-        <ThemeToggle />
-        <NotificationBell />
-        <div className="hidden sm:flex items-center glass-morphism rounded-full px-4 py-2 w-64 focus-within:border-primary/50 transition-all">
+      {/* Right Side Actions */}
+      <div className="flex items-center gap-2 md:gap-3">
+        {/* Search - Hidden on Mobile */}
+        <div className="hidden sm:flex items-center glass-morphism rounded-full px-4 py-2 w-48 lg:w-64 focus-within:border-primary/50 transition-all">
           <Search size={18} className="text-muted" />
           <input 
             type="text" 
-            placeholder="Search listings..." 
+            placeholder="Search..." 
             className="bg-transparent border-none outline-none text-sm ml-2 w-full text-foreground"
           />
         </div>
 
+        {/* Action Icons - Desktop Only */}
+        <div className="hidden md:flex items-center gap-2">
+          <ThemeToggle />
+          <NotificationBell />
+        </div>
+
         {isAuthenticated ? (
-          <div className="flex items-center gap-4">
-            <Link href="/sell">
+          <div className="flex items-center gap-2 md:gap-4">
+            {/* Sell Button - Desktop/Tablet Only */}
+            <Link href="/sell" className="hidden sm:block">
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-primary hover:bg-primary-hover px-4 py-2 rounded-full text-sm font-bold shadow-lg shadow-primary/20 transition-all"
+                className="bg-primary hover:bg-primary-hover px-4 py-2 rounded-full text-xs md:text-sm font-bold shadow-lg shadow-primary/20 transition-all"
               >
                 Sell Item
               </motion.button>
             </Link>
+
+            {/* Profile Dropdown */}
             <div className="relative" ref={profileRef}>
                <button 
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/10 hover:border-primary transition-all flex items-center justify-center bg-secondary"
+                className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-white/10 hover:border-primary transition-all flex items-center justify-center bg-secondary"
                >
                  {user?.avatar ? (
                    <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
                  ) : (
-                   <div className="w-full h-full flex items-center justify-center text-primary font-bold">
+                   <div className="w-full h-full flex items-center justify-center text-primary font-bold text-xs md:text-sm">
                      {user?.name.charAt(0)}
                    </div>
                  )}
@@ -121,7 +132,7 @@ export default function Navbar() {
             </div>
           </div>
         ) : (
-          <div className="flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-2">
             <Link href="/login" className="px-4 py-2 text-sm font-medium hover:text-white transition-colors">Login</Link>
             <Link href="/register">
               <motion.button 
@@ -135,11 +146,12 @@ export default function Navbar() {
           </div>
         )}
         
+        {/* Mobile Menu Toggle */}
         <button 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden text-foreground p-2 hover:bg-secondary rounded-xl transition-all"
+          className="lg:hidden text-foreground p-1.5 md:p-2 hover:bg-white/5 rounded-xl transition-all"
         >
-          <Menu size={24} />
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
@@ -152,24 +164,64 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 bg-black/60 backdrop-blur-md z-40 lg:hidden"
             />
             <motion.div 
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              className="fixed right-0 top-0 bottom-0 w-64 bg-card border-l border-white/10 z-50 p-6 md:hidden"
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed right-0 top-0 bottom-0 w-[80%] max-w-sm bg-[#0a0a0b]/95 backdrop-blur-2xl border-l border-white/10 z-50 p-6 lg:hidden flex flex-col"
             >
-              <div className="flex flex-col gap-6 pt-10">
-                <Link href="/products" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-foreground">Marketplace</Link>
-                <Link href="/how-it-works" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-foreground">How it works</Link>
-                <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-foreground">About</Link>
-                <hr className="border-white/5" />
-                {!isAuthenticated && (
-                  <div className="flex flex-col gap-4">
-                    <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="text-primary font-bold">Login</Link>
-                    <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="bg-primary text-white px-6 py-3 rounded-2xl text-center font-bold">Sign Up</Link>
+              <div className="flex items-center justify-between mb-8 pt-2">
+                <span className="text-xl font-black text-white">Menu</span>
+                <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-white/5 rounded-xl">
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-1 overflow-y-auto flex-grow">
+                {/* Mobile Quick Actions */}
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  <div className="flex items-center justify-center p-4 glass-morphism rounded-2xl gap-3">
+                    <ThemeToggle />
+                    <span className="text-xs font-bold uppercase tracking-wider">Theme</span>
                   </div>
+                  <div className="flex items-center justify-center p-4 glass-morphism rounded-2xl gap-3">
+                    <NotificationBell />
+                    <span className="text-xs font-bold uppercase tracking-wider">Alerts</span>
+                  </div>
+                </div>
+
+                <Link href="/products" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all text-foreground group">
+                  <span className="text-lg font-bold">Marketplace</span>
+                  <ShoppingBag size={20} className="text-muted group-hover:text-primary transition-colors" />
+                </Link>
+                <Link href="/sell" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 bg-primary/10 text-primary rounded-2xl transition-all font-bold">
+                  <span>Sell New Item</span>
+                  <Zap size={20} />
+                </Link>
+                <Link href="/how-it-works" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all text-foreground">
+                  <span className="text-lg font-bold">How it works</span>
+                </Link>
+                <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all text-foreground">
+                  <span className="text-lg font-bold">About</span>
+                </Link>
+                
+                <hr className="border-white/5 my-4" />
+                
+                {!isAuthenticated ? (
+                  <div className="flex flex-col gap-3 mt-auto">
+                    <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="p-4 text-center text-foreground font-bold hover:bg-white/5 rounded-2xl">Login</Link>
+                    <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="p-4 text-center bg-white text-black rounded-2xl font-bold">Get Started</Link>
+                  </div>
+                ) : (
+                   <button 
+                    onClick={() => { logout(); setIsMobileMenuOpen(false); }}
+                    className="mt-auto p-4 flex items-center justify-center gap-2 text-accent font-bold bg-accent/5 rounded-2xl"
+                  >
+                    <LogOut size={20} /> Logout
+                  </button>
                 )}
               </div>
             </motion.div>
@@ -179,3 +231,5 @@ export default function Navbar() {
     </nav>
   );
 }
+
+import { Zap } from "lucide-react";
