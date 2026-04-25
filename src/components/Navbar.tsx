@@ -27,15 +27,15 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-morphism px-6 py-4 flex items-center justify-between">
-      <Link href="/" className="flex items-center gap-3 group">
-        <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass-morphism px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+      <Link href="/" className="flex items-center gap-2 md:gap-3 group">
+        <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
           <img src="/logo.png" alt="EduTrade Logo" className="w-full h-full object-cover" />
         </div>
-        <span className="text-xl font-black tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">EduTrade</span>
+        <span className="text-lg md:text-xl font-black tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">EduTrade</span>
       </Link>
 
-      <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+      <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-400">
         <Link href="/products" className="hover:text-white transition-colors">Marketplace</Link>
         <Link href="/how-it-works" className="hover:text-white transition-colors">How it works</Link>
         <Link href="/about" className="hover:text-white transition-colors">About</Link>

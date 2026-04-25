@@ -6,23 +6,23 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden">
+    <section className="relative pt-24 md:pt-32 pb-16 md:pb-20 overflow-hidden">
       <div className="hero-glow" />
       
-      <div className="max-w-7xl mx-auto px-6 text-center">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold tracking-widest uppercase mb-6">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] md:text-xs font-bold tracking-widest uppercase mb-4 md:mb-6">
             The Student Marketplace
           </span>
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight">
+          <h1 className="text-4xl md:text-7xl font-extrabold mb-6 md:mb-8 tracking-tight">
             Trade, Save, and <br />
             <span className="gradient-text italic">Elevate Your Campus Life</span>
           </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed px-4">
             EduTrade is the #1 marketplace exclusively for college students. Buy and sell textbooks, electronics, dorm essentials, and more within your campus community.
           </p>
 

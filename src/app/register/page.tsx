@@ -73,7 +73,7 @@ export default function RegisterPage() {
           );
 
           // 2. Search in Global API
-          const res = await axios.get(`http://universities.hipolabs.com/search?country=India&name=${value}`);
+          const res = await axios.get(`https://universities.hipolabs.com/search?country=India&name=${value}`);
           const apiMatches = res.data.map((univ: any) => univ.name);
 
           // 3. Merge and remove duplicates, limit to top 15

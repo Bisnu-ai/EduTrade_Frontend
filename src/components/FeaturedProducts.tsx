@@ -64,13 +64,13 @@ export default function FeaturedProducts({ manualProducts }: FeaturedProductsPro
   }
 
   return (
-    <section className="px-6 py-20 max-w-7xl mx-auto">
-      <div className="flex items-end justify-between mb-12">
+    <section className="px-4 md:px-6 py-12 md:py-20 max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 md:mb-12 gap-4">
         <div>
-          <h2 className="text-3xl font-bold mb-2">Newest Listings</h2>
-          <p className="text-gray-500">Freshly added items from your community.</p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-1 md:mb-2">Newest Listings</h2>
+          <p className="text-sm md:text-base text-gray-500">Freshly added items from your community.</p>
         </div>
-        <Link href="/products" className="text-primary font-bold flex items-center gap-1 hover:underline">
+        <Link href="/products" className="text-primary font-bold flex items-center gap-1 hover:underline text-sm md:text-base">
           View All <ArrowUpRight size={18} />
         </Link>
       </div>
