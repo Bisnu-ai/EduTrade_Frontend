@@ -53,7 +53,12 @@ export default function ChatBot() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100]">
+    <motion.div 
+      drag
+      dragMomentum={false}
+      dragConstraints={{ left: -300, right: 0, top: -600, bottom: 0 }}
+      className="fixed bottom-6 right-6 z-[100] cursor-grab active:cursor-grabbing"
+    >
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -145,6 +150,6 @@ export default function ChatBot() {
            </span>
         )}
       </motion.button>
-    </div>
+    </motion.div>
   );
 }
