@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthProvider";
+import ChatBot from "@/components/ChatBot";
 
 export default function RootLayout({
   children,
@@ -35,6 +36,7 @@ export default function RootLayout({
           <AuthProvider>
             <Navbar />
             <main>{children}</main>
+            <ChatBot />
             <Footer />
             <Toaster position="bottom-right" toastOptions={{
               style: {
