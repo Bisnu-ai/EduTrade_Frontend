@@ -33,7 +33,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Contact */}
+          {/* Quick Contact Icons */}
           <div className="flex items-center gap-4">
              <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400">
                <Mail size={18} />
@@ -44,10 +44,10 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar - Copyright moved here */}
+        {/* Combined Bottom Bar */}
         <div className="pt-8 border-t border-white/5 text-center">
           <p className="text-xs text-gray-600 font-medium tracking-wide">
-            &copy; {new Date().getFullYear()} EduTrade. All rights reserved.
+            &copy; {new Date().getFullYear()} EduTrade. Built for students, by students.
           </p>
         </div>
       </div>
