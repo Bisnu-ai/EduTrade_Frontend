@@ -1,0 +1,46 @@
+
+export const LOCAL_COLLEGES = [
+  "Indira Gandhi Institute of Technology (IGIT), Sarang",
+  "Veer Surendra Sai University of Technology (VSSUT), Burla",
+  "Odisha University of Technology and Research (OUTR), Bhubaneswar",
+  "College of Engineering and Technology (CET), Bhubaneswar",
+  "Government College of Engineering (GCE), Keonjhar",
+  "Government College of Engineering (GCE), Kalahandi",
+  "Parala Maharaja Engineering College (PMEC), Berhampur",
+  "Biju Patnaik University of Technology (BPUT), Rourkela",
+
+  "National Institute of Technology (NIT), Rourkela",
+  "Indian Institute of Technology (IIT), Bhubaneswar",
+  "Indian Institute of Management (IIM), Sambalpur",
+  "National Institute of Science Education and Research (NISER), Bhubaneswar",
+  "Central University of Odisha, Koraput",
+
+  "KIIT University, Bhubaneswar",
+  "Siksha 'O' Anusandhan (SOA University), Bhubaneswar",
+  "C. V. Raman Global University, Bhubaneswar",
+  "Silicon Institute of Technology, Bhubaneswar",
+  "Gandhi Institute for Technology (GIFT), Bhubaneswar",
+  "Trident Academy of Technology, Bhubaneswar",
+  "Kalinga University, Bhubaneswar",
+  "Centurion University, Paralakhemundi",
+  "GIET University, Gunupur",
+  "ICFAI University, Jharsuguda",
+
+  "SCB Medical College, Cuttack",
+  "MKCG Medical College, Berhampur",
+  "VIMSAR, Burla",
+  "AIIMS, Bhubaneswar",
+  "Hi-Tech Medical College, Bhubaneswar",
+  "KIMS (KIIT Medical College), Bhubaneswar",
+  "SUM Medical College, Bhubaneswar",
+  "Saheed Laxman Nayak Medical College, Koraput",
+  "Balasore Medical College, Balasore",
+
+  "Utkal University, Bhubaneswar",
+  "Ravenshaw University, Cuttack",
+  "Sambalpur University, Sambalpur",
+  "Berhampur University, Berhampur",
+  "Fakir Mohan University, Balasore",
+  "North Odisha University, Baripada",
+  "Gangadhar Meher University, Sambalpur"
+];
