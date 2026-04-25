@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Heart, Github, Twitter, Instagram, Mail, ArrowRight, ShieldCheck, Zap, Globe } from "lucide-react";
+import { Heart, Globe, Mail, ArrowRight, ShieldCheck, Zap } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -24,7 +24,7 @@ export default function Footer() {
               Revolutionizing campus commerce with a secure, student-first marketplace. Trade smarter, save more, and build your community.
             </p>
             <div className="flex gap-3">
-              {[Github, Twitter, Instagram].map((Icon, i) => (
+              {[Globe, Mail, Zap].map((Icon, i) => (
                 <a key={i} href="#" className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-primary/20 hover:text-primary hover:border-primary/50 transition-all duration-300">
                   <Icon size={18} />
                 </a>
