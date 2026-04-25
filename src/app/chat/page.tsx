@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import api from "@/lib/api";
@@ -31,7 +31,7 @@ const CAMPUS_SPOTS = [
   "Near Oc", "Near Doom", "Main Gate"
 ];
 
-export default function ChatPage() {
+function ChatContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const recipientId = searchParams.get("user");
@@ -458,5 +458,13 @@ export default function ChatPage() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function ChatPage() {
+  return (
+    <Suspense fallback={<div className="h-screen w-full flex items-center justify-center bg-background"><div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" /></div>}>
+      <ChatContent />
+    </Suspense>
   );
 }
