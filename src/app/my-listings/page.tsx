@@ -35,7 +35,13 @@ export default function MyListingsPage() {
           <Loader2 className="animate-spin text-primary" size={40} />
         </div>
       ) : products.length > 0 ? (
-        <FeaturedProducts manualProducts={products} />
+        <FeaturedProducts 
+          manualProducts={products} 
+          title="" 
+          subtitle="" 
+          showAllLink={false}
+          isOwnerView={true}
+        />
       ) : (
         <div className="text-center py-20 glass-morphism rounded-[40px] max-w-2xl mx-auto">
           <PackageSearch className="mx-auto text-gray-700 mb-4" size={60} />

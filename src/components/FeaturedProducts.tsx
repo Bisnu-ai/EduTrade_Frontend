@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
 import { motion } from "framer-motion";
-import { Heart, MapPin, Tag, ArrowUpRight } from "lucide-react";
+import { Heart, MapPin, Tag, ArrowUpRight, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
+import toast from "react-hot-toast";
 
 interface Product {
   _id: string;
@@ -17,6 +18,7 @@ interface Product {
   college: string;
   createdAt: string;
   seller: {
+    _id: string;
     name: string;
     avatar?: string;
   };
@@ -25,9 +27,19 @@ interface Product {
 
 interface FeaturedProductsProps {
   manualProducts?: Product[];
+  title?: string;
+  subtitle?: string;
+  showAllLink?: boolean;
+  isOwnerView?: boolean;
 }
 
-export default function FeaturedProducts({ manualProducts }: FeaturedProductsProps) {
+export default function FeaturedProducts({ 
+  manualProducts, 
+  title = "Newest Listings", 
+  subtitle = "Freshly added items from your community.",
+  showAllLink = true,
+  isOwnerView = false
+}: FeaturedProductsProps) {
   const [products, setProducts] = useState<Product[]>(manualProducts || []);
   const [loading, setLoading] = useState(!manualProducts);
 
@@ -48,12 +60,23 @@ export default function FeaturedProducts({ manualProducts }: FeaturedProductsPro
       }
     };
     fetchProducts();
-  }, []);
+  }, [manualProducts]);
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this listing?")) return;
+    try {
+      await api.delete(`/products/${id}`);
+      setProducts(prev => prev.filter(p => p._id !== id));
+      toast.success("Listing deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete listing");
+    }
+  };
 
   if (loading) {
     return (
-      <section className="px-6 py-20 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold mb-12">Newest Listings</h2>
+      <section className="px-4 md:px-6 py-12 md:py-20 max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold mb-12">{title}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="h-[400px] bg-white/5 rounded-3xl animate-pulse" />
@@ -67,12 +90,14 @@ export default function FeaturedProducts({ manualProducts }: FeaturedProductsPro
     <section className="px-4 md:px-6 py-12 md:py-20 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 md:mb-12 gap-4">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-1 md:mb-2">Newest Listings</h2>
-          <p className="text-sm md:text-base text-gray-500">Freshly added items from your community.</p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-1 md:mb-2">{title}</h2>
+          <p className="text-sm md:text-base text-gray-500">{subtitle}</p>
         </div>
-        <Link href="/products" className="text-primary font-bold flex items-center gap-1 hover:underline text-sm md:text-base">
-          View All <ArrowUpRight size={18} />
-        </Link>
+        {showAllLink && (
+          <Link href="/products" className="text-primary font-bold flex items-center gap-1 hover:underline text-sm md:text-base">
+            View All <ArrowUpRight size={18} />
+          </Link>
+        )}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -91,20 +116,34 @@ export default function FeaturedProducts({ manualProducts }: FeaturedProductsPro
                 alt={product.title} 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              <div className="absolute top-4 right-4">
-                <button className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white hover:text-accent transition-colors">
-                  <Heart size={20} />
-                </button>
+              
+              {/* Overlay Actions */}
+              <div className="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                {isOwnerView ? (
+                  <>
+                    <Link href={`/products/edit/${product._id}`}>
+                      <button className="w-10 h-10 rounded-full bg-primary/90 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary transition-all">
+                        <Edit size={18} />
+                      </button>
+                    </Link>
+                    <button 
+                      onClick={() => handleDelete(product._id)}
+                      className="w-10 h-10 rounded-full bg-red-500/80 backdrop-blur-md flex items-center justify-center text-white hover:bg-red-500 transition-all"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </>
+                ) : (
+                  <button className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white hover:text-accent transition-colors">
+                    <Heart size={20} />
+                  </button>
+                )}
               </div>
+
               <div className="absolute bottom-4 left-4">
                 <span className="px-3 py-1 rounded-full bg-primary/80 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider">
                   {product.category}
                 </span>
-                {product.isDonation && (
-                  <span className="ml-2 px-3 py-1 rounded-full bg-red-500/80 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider">
-                    FREE GIVEAWAY 🎁
-                  </span>
-                )}
               </div>
             </div>
             
@@ -140,7 +179,8 @@ export default function FeaturedProducts({ manualProducts }: FeaturedProductsPro
               </div>
             </div>
             
-            <Link href={`/products/${product._id}`} className="absolute inset-0 z-0" />
+            {/* Clickable Area for Detail Page */}
+            {!isOwnerView && <Link href={`/products/${product._id}`} className="absolute inset-0 z-10" />}
           </motion.div>
         ))}
       </div>
