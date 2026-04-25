@@ -26,12 +26,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-10 border-t border-white/5 text-center text-sm text-gray-500">
-        <div className="max-w-7xl mx-auto px-6">
-          <p>© 2026 EduTrade. All rights reserved. Built for students, by students.</p>
-        </div>
-      </footer>
+      </section>
     </div>
   );
 }
