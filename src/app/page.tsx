@@ -25,8 +25,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      </section>
     </div>
   );
 }
