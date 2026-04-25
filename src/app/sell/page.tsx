@@ -65,7 +65,9 @@ export default function SellPage() {
     };
 
     const data = new FormData();
-    Object.entries(sanitizedData).forEach(([key, value]) => data.append(key, value));
+    Object.entries(sanitizedData).forEach(([key, value]) => {
+      data.append(key, String(value));
+    });
     images.forEach(image => data.append("images", image));
 
     try {
