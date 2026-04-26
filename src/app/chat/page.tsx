@@ -15,9 +15,9 @@ import {
 import toast from "react-hot-toast";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import Link from "next/link";
-const MeetupMap = dynamic(() => import("@/components/MeetupMap"), { 
+const MeetupMap = nextDynamic(() => import("@/components/MeetupMap"), { 
   ssr: false,
   loading: () => <div className="h-64 w-full bg-secondary animate-pulse rounded-2xl" />
 });
