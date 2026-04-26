@@ -112,7 +112,7 @@ export default function FeaturedProducts({
           >
             <div className="h-64 overflow-hidden relative">
               <img 
-                src={product.images[0] || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop'} 
+                src={product.images?.[0] ? (product.images[0].startsWith('http') ? product.images[0] : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${product.images[0]}`) : 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop'} 
                 alt={product.title} 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />

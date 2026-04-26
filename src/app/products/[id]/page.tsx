@@ -88,7 +88,7 @@ export default function ProductDetailPage() {
         <div className="space-y-4 md:space-y-6">
           <div className="relative aspect-[4/3] md:aspect-square rounded-[32px] md:rounded-[40px] overflow-hidden glass-morphism group">
              <img 
-               src={product.images[activeImage]} 
+               src={product.images[activeImage].startsWith('http') ? product.images[activeImage] : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${product.images[activeImage]}`} 
                alt={product.title} 
                className="w-full h-full object-cover"
              />
@@ -120,7 +120,7 @@ export default function ProductDetailPage() {
                   activeImage === i ? "border-primary" : "border-transparent opacity-50"
                 }`}
               >
-                <img src={img} className="w-full h-full object-cover" />
+                <img src={img.startsWith('http') ? img : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${img}`} className="w-full h-full object-cover" />
               </button>
             ))}
           </div>
@@ -169,7 +169,7 @@ export default function ProductDetailPage() {
             <div className="flex items-center gap-3 md:gap-4">
               <div className="w-11 h-11 md:w-14 md:h-14 bg-secondary rounded-xl md:rounded-2xl overflow-hidden">
                 {product.seller.avatar ? (
-                  <img src={product.seller.avatar} className="w-full h-full object-cover" />
+                  <img src={product.seller.avatar.startsWith('http') ? product.seller.avatar : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${product.seller.avatar}`} className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-primary font-bold">
                     {product.seller.name.charAt(0)}
