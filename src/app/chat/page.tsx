@@ -144,30 +144,96 @@ function ChatContent() {
 
   const generateReceipt = (p: any, u: any, r: any) => {
     const doc = new jsPDF() as any;
+    const primaryColor = [79, 70, 229]; // Indigo-600
+    const secondaryColor = [15, 23, 42]; // Slate-900
+
+    // ── Header Section ──
+    doc.setFillColor(...secondaryColor);
+    doc.rect(0, 0, 210, 50, "F");
     
-    // Header
-    doc.setFillColor(63, 81, 181);
-    doc.rect(0, 0, 210, 40, "F");
+    // Logo Text
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(22);
-    doc.text("EduTrade Transaction Receipt", 20, 25);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(28);
+    doc.text("EduTrade", 20, 32);
     
-    // Info
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(12);
-    doc.text(`Receipt Date: ${new Date().toLocaleDateString()}`, 20, 55);
-    doc.text(`Transaction ID: ${Math.random().toString(36).substring(2, 10).toUpperCase()}`, 20, 62);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text("OFFICIAL TRANSACTION RECEIPT", 20, 42);
     
-    // Table
+    // Date & ID (Top Right)
+    doc.setFontSize(9);
+    const dateStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
+    doc.text(`DATE: ${dateStr}`, 140, 32);
+    const transId = `TXN-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+    doc.text(`ID: ${transId}`, 140, 38);
+
+    // ── Body ──
+    let y = 70;
+
+    // Item Header
+    doc.setTextColor(...primaryColor);
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("ITEM DETAILS", 20, y);
+    y += 10;
+
+    // Item Table
     autoTable(doc, {
-      startY: 75,
-      head: [["Item Description", "Price", "Seller", "Buyer"]],
-      body: [[p.title, `INR ${p.price}`, u.name, r.name]],
-      theme: "striped",
-      headStyles: { fillColor: [63, 81, 181] }
+      startY: y,
+      head: [["Description", "Category", "Condition", "Final Price"]],
+      body: [[p.title, p.category, p.condition, `INR ${p.price}`]],
+      theme: "grid",
+      headStyles: { fillColor: primaryColor, textColor: [255, 255, 255], fontStyle: "bold" },
+      styles: { fontSize: 10, cellPadding: 5 },
+      margin: { left: 20, right: 20 }
     });
+
+    y = (doc as any).lastAutoTable.finalY + 25;
+
+    // Parties Involved
+    doc.setTextColor(...primaryColor);
+    doc.setFontSize(14);
+    doc.text("PARTIES INVOLVED", 20, y);
+    y += 12;
+
+    // Seller & Buyer Info
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("SELLER", 20, y);
+    doc.text("BUYER", 110, y);
     
-    doc.text("Thank you for using EduTrade! Keep the campus green by recycling.", 20, (doc as any).lastAutoTable.finalY + 20);
+    y += 6;
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.text(u.name, 20, y);
+    doc.text(r.name, 110, y);
+    
+    y += 5;
+    doc.setFontSize(9);
+    doc.setTextColor(100, 100, 100);
+    doc.text(u.college || "EduTrade Member", 20, y);
+    doc.text(r.college || "EduTrade Member", 110, y);
+
+    // ── Footer ──
+    const footerY = 270;
+    doc.setDrawColor(230, 230, 230);
+    doc.line(20, footerY - 10, 190, footerY - 10);
+    
+    doc.setTextColor(150, 150, 150);
+    doc.setFontSize(8);
+    doc.text("This is an electronically generated receipt and does not require a physical signature.", 105, footerY, { align: "center" });
+    doc.text("Thank you for contributing to a sustainable campus economy! 🌿", 105, footerY + 5, { align: "center" });
+    
+    // Verified Badge
+    doc.setFillColor(...primaryColor);
+    doc.roundedRect(160, 265, 30, 10, 2, 2, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(8);
+    doc.text("VERIFIED", 175, 271, { align: "center" });
+
     doc.save(`EduTrade_Receipt_${p.title.replace(/\s+/g, "_")}.pdf`);
   };
 
