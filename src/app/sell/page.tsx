@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/lib/api";
 import { motion } from "framer-motion";
 import { Upload, X, Tag, DollarSign, List, Info, Loader2, Plus, Heart } from "lucide-react";
@@ -11,6 +11,9 @@ const CATEGORIES = ["Textbooks", "Electronics", "Dorm Essentials", "Stationery",
 const CONDITIONS = ["New", "Gently Used", "Fair", "Heavily Used"];
 
 export default function SellPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -20,11 +23,35 @@ export default function SellPage() {
     location: "",
     isDonation: false,
   });
+
+  useEffect(() => {
+    const title = searchParams.get("title");
+    const price = searchParams.get("price");
+    const category = searchParams.get("category");
+    const condition = searchParams.get("condition");
+    const description = searchParams.get("description");
+
+    if (title || price || category || condition || description) {
+      setFormData(prev => ({
+        ...prev,
+        title: title || prev.title,
+        price: price || prev.price,
+        description: description || prev.description,
+        // Match category and condition case-insensitively
+        category: CATEGORIES.find(c => c.toLowerCase() === category?.toLowerCase()) || prev.category,
+        condition: CONDITIONS.find(c => c.toLowerCase().replace(/\s+/g, "-") === condition?.toLowerCase()) || prev.condition,
+      }));
+      
+      if (searchParams.get("fromChat") === "true") {
+        toast.success("Details imported from chat! Please add photos to finish.");
+      }
+    }
+  }, [searchParams]);
+
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const router = useRouter();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {

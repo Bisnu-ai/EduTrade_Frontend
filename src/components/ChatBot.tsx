@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, X, Send, Bot, Loader2, Sparkles } from "lucide-react";
 import api from "@/lib/api";
+import ReactMarkdown from "react-markdown";
+import Link from "next/link";
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -95,7 +97,22 @@ export default function ChatBot() {
                       ? "bg-primary text-white rounded-tr-none" 
                       : "bg-white/5 text-foreground border border-white/5 rounded-tl-none"
                   }`}>
-                    {msg.text}
+                    <ReactMarkdown 
+                      components={{
+                        a: ({node, ...props}) => {
+                          const isInternal = props.href?.startsWith("/");
+                          if (isInternal) {
+                            return <Link href={props.href!} className="text-primary-hover font-bold underline underline-offset-4 decoration-2 hover:text-white transition-colors" {...props as any} />;
+                          }
+                          return <a className="text-primary-hover font-bold underline underline-offset-4 decoration-2" target="_blank" rel="noopener noreferrer" {...props} />;
+                        },
+                        p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
+                        ul: ({node, ...props}) => <ul className="list-disc ml-4 mb-2" {...props} />,
+                        li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                      }}
+                    >
+                      {msg.text}
+                    </ReactMarkdown>
                   </div>
                 </div>
               ))}
