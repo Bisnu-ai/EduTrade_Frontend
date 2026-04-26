@@ -5,7 +5,7 @@ import { Heart, Mail, Globe } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="w-full py-12 px-6 border-t border-white/5 bg-[#0a0a0b] backdrop-blur-xl">
+    <footer className="w-full py-12 px-6 border-t border-white/5 bg-background backdrop-blur-xl">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-10 mb-10">
           {/* Brand */}
