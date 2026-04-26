@@ -67,7 +67,7 @@ export default function ChatBot() {
             initial={{ opacity: 0, y: 20, scale: 0.8, transformOrigin: "bottom right" }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
-            className="mb-4 w-[90vw] max-w-[380px] h-[500px] glass-morphism rounded-[32px] overflow-hidden shadow-2xl flex flex-col border border-white/10"
+            className="mb-4 w-[90vw] max-w-[380px] h-[500px] bg-card/95 backdrop-blur-2xl rounded-[32px] overflow-hidden shadow-2xl flex flex-col border border-white/10"
           >
             {/* Header */}
             <div className="p-5 bg-primary flex items-center justify-between">
