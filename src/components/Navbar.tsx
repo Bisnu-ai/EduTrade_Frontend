@@ -58,7 +58,7 @@ export default function Navbar() {
         {/* Action Icons - Desktop Only */}
         <div className="hidden md:flex items-center gap-2">
           <ThemeToggle />
-          <NotificationBell />
+          {isAuthenticated && <NotificationBell />}
         </div>
 
         {isAuthenticated ? (
@@ -182,15 +182,17 @@ export default function Navbar() {
 
               <div className="flex flex-col gap-1 overflow-y-auto flex-grow">
                 {/* Mobile Quick Actions */}
-                <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className={`grid ${isAuthenticated ? 'grid-cols-2' : 'grid-cols-1'} gap-3 mb-6`}>
                   <div className="flex items-center justify-center p-4 glass-morphism rounded-2xl gap-3">
                     <ThemeToggle />
                     <span className="text-xs font-bold uppercase tracking-wider">Theme</span>
                   </div>
-                  <div className="flex items-center justify-center p-4 glass-morphism rounded-2xl gap-3">
-                    <NotificationBell />
-                    <span className="text-xs font-bold uppercase tracking-wider">Alerts</span>
-                  </div>
+                  {isAuthenticated && (
+                    <div className="flex items-center justify-center p-4 glass-morphism rounded-2xl gap-3">
+                      <NotificationBell />
+                      <span className="text-xs font-bold uppercase tracking-wider">Alerts</span>
+                    </div>
+                  )}
                 </div>
 
                 <Link href="/products" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all text-foreground group">
