@@ -100,7 +100,7 @@ export default function FeaturedProducts({
         )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
         {products.map((product) => (
           <motion.div
             key={product._id}
@@ -108,9 +108,9 @@ export default function FeaturedProducts({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             whileHover={{ y: -8 }}
-            className="glass-morphism rounded-3xl overflow-hidden group relative"
+            className="glass-morphism rounded-2xl md:rounded-3xl overflow-hidden group relative"
           >
-            <div className="h-64 overflow-hidden relative">
+            <div className="h-40 md:h-64 overflow-hidden relative">
               <img 
                 src={product.images?.[0] ? (product.images[0].startsWith('http') ? product.images[0] : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${product.images[0]}`) : 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop'} 
                 alt={product.title} 
@@ -118,63 +118,63 @@ export default function FeaturedProducts({
               />
               
               {/* Overlay Actions */}
-              <div className="absolute top-4 right-4 flex flex-col gap-2 z-20">
+              <div className="absolute top-2 md:top-4 right-2 md:right-4 flex flex-col gap-2 z-20">
                 {isOwnerView ? (
                   <>
                     <Link href={`/products/edit/${product._id}`}>
-                      <button className="w-10 h-10 rounded-full bg-primary/90 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary transition-all">
-                        <Edit size={18} />
+                      <button className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/90 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary transition-all">
+                        <Edit size={14} className="md:w-[18px]" />
                       </button>
                     </Link>
                     <button 
                       onClick={() => handleDelete(product._id)}
-                      className="w-10 h-10 rounded-full bg-red-500/80 backdrop-blur-md flex items-center justify-center text-white hover:bg-red-500 transition-all"
+                      className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-red-500/80 backdrop-blur-md flex items-center justify-center text-white hover:bg-red-500 transition-all"
                     >
-                      <Trash2 size={18} />
+                      <Trash2 size={14} className="md:w-[18px]" />
                     </button>
                   </>
                 ) : (
-                  <button className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white hover:text-accent transition-colors">
-                    <Heart size={20} />
+                  <button className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/30 backdrop-blur-md flex items-center justify-center text-white hover:text-accent transition-colors">
+                    <Heart size={16} className="md:w-[20px]" />
                   </button>
                 )}
               </div>
 
-              <div className="absolute bottom-4 left-4">
-                <span className="px-3 py-1 rounded-full bg-primary/80 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider">
+              <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4">
+                <span className="px-2 py-0.5 md:px-3 md:py-1 rounded-full bg-primary/80 backdrop-blur-md text-[8px] md:text-[10px] font-bold uppercase tracking-wider">
                   {product.category}
                 </span>
               </div>
             </div>
             
-            <div className="p-5">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-full bg-secondary overflow-hidden">
+            <div className="p-3 md:p-5">
+              <div className="flex items-center justify-between mb-2 md:mb-3">
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <div className="w-4 h-4 md:w-6 md:h-6 rounded-full bg-secondary overflow-hidden">
                     {product.seller.avatar ? (
                         <img src={product.seller.avatar} alt={product.seller.name} className="w-full h-full object-cover" />
                     ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[10px] text-primary">
+                        <div className="w-full h-full flex items-center justify-center text-[8px] md:text-[10px] text-primary font-bold">
                             {product.seller?.name?.charAt(0) || "U"}
                         </div>
                     )}
                   </div>
-                  <span className="text-xs text-gray-400 font-medium">{product.seller?.name || "Unknown"}</span>
+                  <span className="text-[10px] md:text-xs text-gray-400 font-medium truncate max-w-[60px] md:max-w-none">{product.seller?.name || "Unknown"}</span>
                 </div>
-                <span className="text-xs text-gray-500">{formatDate(product.createdAt)}</span>
+                <span className="text-[9px] md:text-xs text-gray-500">{formatDate(product.createdAt)}</span>
               </div>
               
-              <h3 className="font-bold mb-2 line-clamp-1">{product.title}</h3>
-              <div className={`text-2xl font-black mb-4 ${product.isDonation ? "text-red-500" : "text-white"}`}>
+              <h3 className="text-xs md:text-base font-bold mb-1 md:mb-2 line-clamp-1">{product.title}</h3>
+              <div className={`text-lg md:text-2xl font-black mb-2 md:mb-4 ${product.isDonation ? "text-red-500" : "text-white"}`}>
                 {product.isDonation ? "FREE" : `₹${product.price}`}
               </div>
               
-              <div className="flex items-center gap-4 text-xs text-gray-500">
+              <div className="flex items-center gap-2 md:gap-4 text-[9px] md:text-xs text-gray-500">
                 <span className="flex items-center gap-1">
-                  <Tag size={12} /> {product.condition}
+                  <Tag size={10} className="md:w-[12px]" /> {product.condition}
                 </span>
                 <span className="flex items-center gap-1">
-                  <MapPin size={12} /> {product.college.split(' ')[0]}
+                  <MapPin size={10} className="md:w-[12px]" /> {product.college.split(' ')[0]}
                 </span>
               </div>
             </div>
