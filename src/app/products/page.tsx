@@ -15,7 +15,7 @@ export default function MarketplacePage() {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const { data } = await api.get(`/products?search=${search}&category=${category}`);
+      const { data } = await api.get(`/products?search=${search}&category=${category}&_t=${Date.now()}`);
       setProducts(data.data.products);
     } catch (error) {
       console.error(error);
