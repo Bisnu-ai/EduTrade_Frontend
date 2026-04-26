@@ -65,24 +65,31 @@ export default function RegisterPage() {
 
     if (name === "college") {
       if (value.length > 1) {
+        // 1. Get Local Matches immediately for instant feedback
+        const localMatches = LOCAL_COLLEGES.filter(c => 
+          c.toLowerCase().includes(value.toLowerCase())
+        );
+        
+        setFilteredColleges(localMatches);
+        if (localMatches.length > 0) setShowColleges(true);
+
+        // 2. Fetch from External API in the background
         setIsFetchingColleges(true);
         try {
-          // 1. Search in Local List first
-          const localMatches = LOCAL_COLLEGES.filter(c => 
-            c.toLowerCase().includes(value.toLowerCase())
-          );
-
-          // 2. Search in Global API
-          const res = await axios.get(`https://universities.hipolabs.com/search?country=India&name=${value}`);
+          const res = await axios.get(`https://universities.hipolabs.com/search?country=India&name=${value}`, { timeout: 5000 });
           const apiMatches = res.data.map((univ: any) => univ.name);
 
-          // 3. Merge and remove duplicates, limit to top 15
+          // 3. Merge and update (avoid duplicates)
           const merged = Array.from(new Set([...localMatches, ...apiMatches])).slice(0, 15);
-          
           setFilteredColleges(merged);
-          setShowColleges(true);
+          if (merged.length > 0) setShowColleges(true);
         } catch (error) {
-          console.error("Error fetching colleges", error);
+          console.error("External API error, showing local results only", error);
+          // Keep showing local matches if API fails
+          if (localMatches.length > 0) {
+            setFilteredColleges(localMatches);
+            setShowColleges(true);
+          }
         } finally {
           setIsFetchingColleges(false);
         }
