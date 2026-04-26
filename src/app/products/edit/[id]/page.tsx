@@ -45,7 +45,8 @@ export default function EditProductPage() {
     const fetchProduct = async () => {
       try {
         const { data } = await api.get(`/products/${id}`);
-        const p = data.data.product;
+        // Response structure: { success: true, data: { product, isWishlisted } }
+        const p = data.data?.product || data.data;
         
         // Safety check: Only owner can edit
         if (p.seller._id !== user?._id) {
