@@ -144,8 +144,8 @@ function ChatContent() {
 
   const generateReceipt = (p: any, u: any, r: any) => {
     const doc = new jsPDF() as any;
-    const primaryColor = [79, 70, 229]; // Indigo-600
-    const secondaryColor = [15, 23, 42]; // Slate-900
+    const primaryColor: [number, number, number] = [79, 70, 229]; // Indigo-600
+    const secondaryColor: [number, number, number] = [15, 23, 42]; // Slate-900
 
     // ── Header Section ──
     doc.setFillColor(...secondaryColor);
