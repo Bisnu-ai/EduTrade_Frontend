@@ -35,6 +35,7 @@ export default function VerifyOTPPage() {
     try {
       const { data } = await api.post("/auth/verify-otp", {
         userId: pendingData.userId,
+        email: pendingData.email,
         otp
       });
       
@@ -53,7 +54,10 @@ export default function VerifyOTPPage() {
     if (!pendingData) return;
     setResending(true);
     try {
-      const { data } = await api.post("/auth/resend-otp", { userId: pendingData.userId });
+      const { data } = await api.post("/auth/resend-otp", { 
+        userId: pendingData.userId,
+        email: pendingData.email
+      });
       toast.success(data.message);
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to resend OTP");
