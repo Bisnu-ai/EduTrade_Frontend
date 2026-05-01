@@ -206,7 +206,7 @@ export default function FeaturedProducts({
             {!isOwnerView && <Link href={`/products/${product._id}`} className="absolute inset-0 z-10" />}
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
