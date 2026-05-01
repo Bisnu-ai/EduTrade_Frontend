@@ -36,6 +36,7 @@ export default function Navbar() {
   }, [scrollY]);
 
   return (
+    <>
     <motion.nav 
       initial={false}
       animate={{
@@ -177,82 +178,84 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-md z-40 lg:hidden"
-            />
-            <motion.div 
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 bottom-0 w-[80%] max-w-sm bg-background/95 backdrop-blur-2xl border-l border-white/10 z-50 p-6 lg:hidden flex flex-col"
-            >
-              <div className="flex items-center justify-between mb-8 pt-2">
-                <span className="text-xl font-black text-white">Menu</span>
-                <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-white/5 rounded-xl">
-                  <X size={20} />
-                </button>
-              </div>
+    </motion.nav>
+    
+    {/* Mobile Menu Overlay - Outside nav to avoid clipping/z-index issues */}
+    <AnimatePresence>
+      {isMobileMenuOpen && (
+        <>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] lg:hidden"
+          />
+          <motion.div 
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed right-0 top-0 bottom-0 w-[80%] max-w-sm bg-[#0a0a0a] backdrop-blur-2xl border-l border-white/10 z-[101] p-6 lg:hidden flex flex-col"
+          >
+            <div className="flex items-center justify-between mb-8 pt-2">
+              <span className="text-xl font-black text-white">Menu</span>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-white/5 rounded-xl">
+                <X size={20} />
+              </button>
+            </div>
 
-              <div className="flex flex-col gap-1 overflow-y-auto flex-grow">
-                {/* Mobile Quick Actions */}
-                <div className={`grid ${isAuthenticated ? 'grid-cols-2' : 'grid-cols-1'} gap-3 mb-6`}>
-                  <div className="flex items-center justify-center p-4 glass-morphism rounded-2xl gap-3">
-                    <ThemeToggle />
-                    <span className="text-xs font-bold uppercase tracking-wider">Theme</span>
-                  </div>
-                  {isAuthenticated && (
-                    <div className="flex items-center justify-center p-4 glass-morphism rounded-2xl gap-3">
-                      <NotificationBell />
-                      <span className="text-xs font-bold uppercase tracking-wider">Alerts</span>
-                    </div>
-                  )}
+            <div className="flex flex-col gap-1 overflow-y-auto flex-grow">
+              {/* Mobile Quick Actions */}
+              <div className={`grid ${isAuthenticated ? 'grid-cols-2' : 'grid-cols-1'} gap-3 mb-6`}>
+                <div className="flex items-center justify-center p-4 glass-morphism rounded-2xl gap-3 text-white">
+                  <ThemeToggle />
+                  <span className="text-xs font-bold uppercase tracking-wider">Theme</span>
                 </div>
-
-                <Link href="/products" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all text-foreground group">
-                  <span className="text-lg font-bold">Marketplace</span>
-                  <ShoppingBag size={20} className="text-muted group-hover:text-primary transition-colors" />
-                </Link>
-                <Link href="/sell" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 bg-primary/10 text-primary rounded-2xl transition-all font-bold">
-                  <span>Sell New Item</span>
-                  <Zap size={20} />
-                </Link>
-                <Link href="/how-it-works" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all text-foreground">
-                  <span className="text-lg font-bold">How it works</span>
-                </Link>
-                <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all text-foreground">
-                  <span className="text-lg font-bold">About</span>
-                </Link>
-                
-                <hr className="border-white/5 my-4" />
-                
-                {!isAuthenticated ? (
-                  <div className="flex flex-col gap-3 mt-auto">
-                    <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="p-4 text-center text-foreground font-bold hover:bg-white/5 rounded-2xl">Login</Link>
-                    <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="p-4 text-center bg-white text-black rounded-2xl font-bold">Get Started</Link>
+                {isAuthenticated && (
+                  <div className="flex items-center justify-center p-4 glass-morphism rounded-2xl gap-3 text-white">
+                    <NotificationBell />
+                    <span className="text-xs font-bold uppercase tracking-wider">Alerts</span>
                   </div>
-                ) : (
-                   <button 
-                    onClick={() => { logout(); setIsMobileMenuOpen(false); }}
-                    className="mt-auto p-4 flex items-center justify-center gap-2 text-accent font-bold bg-accent/5 rounded-2xl"
-                  >
-                    <LogOut size={20} /> Logout
-                  </button>
                 )}
               </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+
+              <Link href="/products" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all text-gray-300 hover:text-white group">
+                <span className="text-lg font-bold">Marketplace</span>
+                <ShoppingBag size={20} className="text-muted group-hover:text-primary transition-colors" />
+              </Link>
+              <Link href="/sell" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 bg-primary/10 text-primary rounded-2xl transition-all font-bold">
+                <span>Sell New Item</span>
+                <Zap size={20} />
+              </Link>
+              <Link href="/how-it-works" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all text-gray-300 hover:text-white">
+                <span className="text-lg font-bold">How it works</span>
+              </Link>
+              <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all text-gray-300 hover:text-white">
+                <span className="text-lg font-bold">About</span>
+              </Link>
+              
+              <hr className="border-white/5 my-4" />
+              
+              {!isAuthenticated ? (
+                <div className="flex flex-col gap-3 mt-auto">
+                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="p-4 text-center text-white font-bold hover:bg-white/5 rounded-2xl">Login</Link>
+                  <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="p-4 text-center bg-white text-black rounded-2xl font-bold">Get Started</Link>
+                </div>
+              ) : (
+                  <button 
+                  onClick={() => { logout(); setIsMobileMenuOpen(false); }}
+                  className="mt-auto p-4 flex items-center justify-center gap-2 text-accent font-bold bg-accent/5 rounded-2xl"
+                >
+                  <LogOut size={20} /> Logout
+                </button>
+              )}
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+    </>
   );
 }
 
