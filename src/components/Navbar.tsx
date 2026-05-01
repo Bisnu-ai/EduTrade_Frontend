@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useAuthStore } from "@/store/useAuthStore";
 import { Search, ShoppingBag, User as UserIcon, LogOut, Menu, Heart, ShieldAlert, X, Bell, Moon, Sun } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
 import { NotificationBell } from "./NotificationBell";
 
@@ -252,7 +252,7 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 }
 
