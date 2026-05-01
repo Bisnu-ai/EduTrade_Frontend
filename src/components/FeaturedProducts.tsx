@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Heart, MapPin, Tag, ArrowUpRight, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
