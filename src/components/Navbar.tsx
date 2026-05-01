@@ -7,6 +7,7 @@ import { Search, ShoppingBag, User as UserIcon, LogOut, Menu, Heart, ShieldAlert
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
 import { NotificationBell } from "./NotificationBell";
+import { useTheme } from "next-themes";
 
 import { useState, useRef, useEffect } from "react";
 
@@ -16,6 +17,7 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
+  const { theme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Close dropdown when clicking outside
@@ -35,6 +37,14 @@ export default function Navbar() {
     });
   }, [scrollY]);
 
+  const navBg = theme === "dark" 
+    ? (isScrolled ? "rgba(10, 10, 10, 0.85)" : "rgba(10, 10, 10, 0.4)")
+    : (isScrolled ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.5)");
+
+  const navBorder = theme === "dark"
+    ? (isScrolled ? "rgba(255, 255, 255, 0.08)" : "rgba(255, 255, 255, 0.02)")
+    : (isScrolled ? "rgba(0, 0, 0, 0.08)" : "rgba(0, 0, 0, 0.02)");
+
   return (
     <>
     <motion.nav 
@@ -42,11 +52,11 @@ export default function Navbar() {
       animate={{
         paddingTop: isScrolled ? "12px" : "16px",
         paddingBottom: isScrolled ? "12px" : "16px",
-        backgroundColor: isScrolled ? "rgba(10, 10, 10, 0.85)" : "rgba(10, 10, 10, 0.5)",
+        backgroundColor: navBg,
         backdropFilter: isScrolled ? "blur(20px)" : "blur(10px)",
-        borderBottom: isScrolled ? "1px solid rgba(255, 255, 255, 0.08)" : "1px solid rgba(255, 255, 255, 0)"
+        borderBottom: `1px solid ${navBorder}`
       }}
-      className="fixed top-0 left-0 right-0 z-50 px-4 md:px-6 flex items-center justify-between transition-colors duration-300"
+      className="fixed top-0 left-0 right-0 z-50 px-4 md:px-6 flex items-center justify-between transition-colors duration-500"
     >
       {/* Logo Section */}
       <Link href="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
