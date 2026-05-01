@@ -103,15 +103,33 @@ export default function FeaturedProducts({
         </div>
       )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
+      <motion.div 
+        className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={{
+          visible: {
+            transition: {
+              staggerChildren: 0.1
+            }
+          }
+        }}
+      >
         {products.map((product) => (
           <motion.div
             key={product._id}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            whileHover={{ y: -8 }}
-            className="glass-morphism rounded-2xl md:rounded-3xl overflow-hidden group relative"
+            variants={{
+              hidden: { opacity: 0, y: 30, scale: 0.95 },
+              visible: { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1,
+                transition: { duration: 0.5, ease: [0.215, 0.61, 0.355, 1] } 
+              }
+            }}
+            whileHover={{ y: -8, scale: 1.02 }}
+            className="glass-morphism rounded-2xl md:rounded-3xl overflow-hidden group relative transition-shadow hover:shadow-2xl hover:shadow-primary/20"
           >
             <div className="h-40 md:h-64 overflow-hidden relative">
               <Image 

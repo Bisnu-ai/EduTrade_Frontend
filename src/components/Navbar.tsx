@@ -15,6 +15,8 @@ export default function Navbar() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -27,13 +29,32 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    return scrollY.onChange((latest) => {
+      setIsScrolled(latest > 50);
+    });
+  }, [scrollY]);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-morphism px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+    <motion.nav 
+      initial={false}
+      animate={{
+        paddingTop: isScrolled ? "12px" : "16px",
+        paddingBottom: isScrolled ? "12px" : "16px",
+        backgroundColor: isScrolled ? "rgba(10, 10, 10, 0.85)" : "rgba(10, 10, 10, 0.5)",
+        backdropFilter: isScrolled ? "blur(20px)" : "blur(10px)",
+        borderBottom: isScrolled ? "1px solid rgba(255, 255, 255, 0.08)" : "1px solid rgba(255, 255, 255, 0)"
+      }}
+      className="fixed top-0 left-0 right-0 z-50 px-4 md:px-6 flex items-center justify-between transition-colors duration-300"
+    >
       {/* Logo Section */}
       <Link href="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
-        <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300 relative">
+        <motion.div 
+          animate={{ scale: isScrolled ? 0.9 : 1 }}
+          className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300 relative"
+        >
           <Image src="/logo.png" alt="EduTrade Logo" fill className="object-cover" priority />
-        </div>
+        </motion.div>
         <span className="text-lg md:text-xl font-black tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">EduTrade</span>
       </Link>
 

@@ -1,5 +1,8 @@
+"use client";
+
 import Hero from "@/components/Hero";
 import FeaturedProducts from "@/components/FeaturedProducts";
+import { motion } from "framer-motion";
 
 export default function Home() {
   return (
@@ -9,11 +12,36 @@ export default function Home() {
       
       {/* Newsletter Section */}
       <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto glass-morphism p-12 rounded-[40px] text-center relative overflow-hidden">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-4xl mx-auto glass-morphism p-12 rounded-[40px] text-center relative overflow-hidden"
+        >
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full filter blur-[80px] -mr-32 -mt-32" />
-          <h2 className="text-3xl font-bold mb-4">Stay updated on the latest deals</h2>
-          <p className="text-gray-400 mb-8">Join our newsletter to receive the best campus offers and community updates.</p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-3xl font-bold mb-4"
+          >
+            Stay updated on the latest deals
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="text-gray-400 mb-8"
+          >
+            Join our newsletter to receive the best campus offers and community updates.
+          </motion.p>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
+          >
             <input 
               type="email" 
               placeholder="Enter your email" 
@@ -22,8 +50,8 @@ export default function Home() {
             <button className="bg-white text-black px-8 py-4 rounded-2xl font-bold hover:bg-gray-200 transition-colors">
               Subscribe
             </button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
     </div>
   );
