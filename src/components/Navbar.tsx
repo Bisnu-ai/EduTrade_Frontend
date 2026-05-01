@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useAuthStore } from "@/store/useAuthStore";
 import { Search, ShoppingBag, User as UserIcon, LogOut, Menu, Heart, ShieldAlert, X, Bell, Moon, Sun } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -30,8 +31,8 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 glass-morphism px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
       {/* Logo Section */}
       <Link href="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
-        <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
-          <img src="/logo.png" alt="EduTrade Logo" className="w-full h-full object-cover" />
+        <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300 relative">
+          <Image src="/logo.png" alt="EduTrade Logo" fill className="object-cover" priority />
         </div>
         <span className="text-lg md:text-xl font-black tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">EduTrade</span>
       </Link>
@@ -78,10 +79,10 @@ export default function Navbar() {
             <div className="relative" ref={profileRef}>
                <button 
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-white/10 hover:border-primary transition-all flex items-center justify-center bg-secondary"
+                className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-white/10 hover:border-primary transition-all flex items-center justify-center bg-secondary relative"
                >
                  {user?.avatar ? (
-                   <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+                   <Image src={user.avatar} alt={user.name} fill className="object-cover" />
                  ) : (
                    <div className="w-full h-full flex items-center justify-center text-primary font-bold text-xs md:text-sm">
                      {user?.name.charAt(0)}
