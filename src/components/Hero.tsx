@@ -112,10 +112,10 @@ export default function Hero() {
             className="mt-32 grid grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {[
-              { label: "Active Users", value: "12K+", icon: Users },
-              { label: "Total Trades", value: "45K+", icon: Repeat },
-              { label: "Items Sold", value: "30K+", icon: Zap },
-              { label: "Verified Safety", value: "100%", icon: Shield },
+              { label: "Active Students", value: "500+", icon: Users },
+              { label: "Items Traded", value: "1.2k+", icon: Repeat },
+              { label: "Saved by Students", value: "₹50k+", icon: Zap },
+              { label: "Colleges Joined", value: "15+", icon: Shield },
             ].map((stat, i) => (
               <motion.div 
                 key={i} 
