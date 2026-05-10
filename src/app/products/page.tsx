@@ -60,7 +60,9 @@ function MarketplaceContent() {
         
         <div className="flex items-center gap-3 w-full md:w-auto px-2">
           <div className="relative flex-grow md:w-80">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" size={16} />
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <Search className="text-muted" size={16} />
+            </div>
             <input 
               type="text" 
               placeholder="Search items..."
