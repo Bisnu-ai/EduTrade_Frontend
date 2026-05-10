@@ -16,6 +16,14 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com', // Common for avatars
+      },
+      {
+        protocol: 'https',
+        hostname: 'edutrade-backend-z66g.onrender.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'edutrade-backend-z66g.onrender.com',
       }
     ],
   },

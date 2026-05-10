@@ -19,6 +19,12 @@ export default function Navbar() {
   const { scrollY } = useScroll();
   const { theme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Avoid hydration mismatch by waiting for mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -32,16 +38,16 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    return scrollY.onChange((latest) => {
+    return scrollY.on("change", (latest) => {
       setIsScrolled(latest > 50);
     });
   }, [scrollY]);
 
-  const navBg = theme === "dark" 
+  const navBg = !mounted || theme === "dark" 
     ? (isScrolled ? "rgba(10, 10, 10, 0.85)" : "rgba(10, 10, 10, 0.4)")
     : (isScrolled ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.5)");
 
-  const navBorder = theme === "dark"
+  const navBorder = !mounted || theme === "dark"
     ? (isScrolled ? "rgba(255, 255, 255, 0.08)" : "rgba(255, 255, 255, 0.02)")
     : (isScrolled ? "rgba(0, 0, 0, 0.08)" : "rgba(0, 0, 0, 0.02)");
 
@@ -64,7 +70,7 @@ export default function Navbar() {
           animate={{ scale: isScrolled ? 0.9 : 1 }}
           className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300 relative"
         >
-          <Image src="/logo.png" alt="CampusKart Logo" fill className="object-cover" priority />
+          <Image src="/logo.png" alt="CampusKart Logo" fill sizes="40px" className="object-cover" priority />
         </motion.div>
         <span className="text-lg md:text-xl font-black tracking-tight bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">CampusKart</span>
       </Link>
