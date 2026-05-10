@@ -11,6 +11,7 @@ interface User {
   department?: string;
   year?: string;
   bio?: string;
+  dob?: string;
   role: "user" | "admin";
 }
 
