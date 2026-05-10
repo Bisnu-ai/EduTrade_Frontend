@@ -75,8 +75,9 @@ export default function GoogleSignInButton({ mode = "login" }: { mode?: "login" 
   const [clientId, setClientId] = useState<string | null>(null);
 
   useEffect(() => {
-    // Only access env on client side to avoid build-time errors
-    setClientId(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || null);
+    const id = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    console.log("Google Client ID check:", id ? "Found ✅" : "Not Found ❌");
+    setClientId(id || null);
   }, []);
 
   // During SSR or if clientId is missing, don't render the hook-using component
