@@ -157,7 +157,7 @@ function SellForm() {
             value={formData.title}
             onChange={(e) => setFormData({...formData, title: e.target.value})}
             placeholder="What are you selling?"
-            className={`w-full bg-white/5 border ${fieldErrors.title ? "border-red-500/50" : "border-white/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-white`}
+            className={`w-full bg-secondary border ${fieldErrors.title ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground`}
           />
           {fieldErrors.title && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.title}</p>}
         </div>
@@ -170,7 +170,7 @@ function SellForm() {
             value={formData.description}
             onChange={(e) => setFormData({...formData, description: e.target.value})}
             placeholder="Provide details about condition, age, etc."
-            className={`w-full bg-white/5 border ${fieldErrors.description ? "border-red-500/50" : "border-white/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-white resize-none`}
+            className={`w-full bg-secondary border ${fieldErrors.description ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground resize-none`}
           />
           {fieldErrors.description && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.description}</p>}
         </div>
@@ -186,7 +186,7 @@ function SellForm() {
               value={formData.isDonation ? "0" : formData.price}
               onChange={(e) => setFormData({...formData, price: e.target.value})}
               placeholder="0.00"
-              className={`w-full bg-white/5 border ${fieldErrors.price ? "border-red-500/50" : "border-white/10"} rounded-2xl py-4 pl-12 pr-6 outline-none focus:border-primary/50 transition-all text-white disabled:opacity-50`}
+              className={`w-full bg-secondary border ${fieldErrors.price ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 pl-12 pr-6 outline-none focus:border-primary/50 transition-all text-foreground disabled:opacity-50`}
             />
           </div>
           {fieldErrors.price && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.price}</p>}
@@ -196,7 +196,7 @@ function SellForm() {
           <button
             type="button"
             onClick={() => setFormData({...formData, isDonation: !formData.isDonation, price: !formData.isDonation ? "0" : ""})}
-            className={`flex items-center justify-between gap-3 px-6 py-4 rounded-2xl border transition-all ${formData.isDonation ? "bg-red-500/10 border-red-500/50 text-red-500" : "bg-white/5 border-white/10 text-gray-400 hover:border-white/20"}`}
+            className={`flex items-center justify-between gap-3 px-6 py-4 rounded-2xl border transition-all ${formData.isDonation ? "bg-red-500/10 border-red-500/50 text-red-500" : "bg-secondary border-foreground/10 text-muted hover:border-foreground/20"}`}
           >
             <div className="flex items-center gap-2">
               <Heart size={18} fill={formData.isDonation ? "currentColor" : "none"} />
@@ -214,7 +214,7 @@ function SellForm() {
             required
             value={formData.category}
             onChange={(e) => setFormData({...formData, category: e.target.value})}
-            className={`w-full bg-[#161621] border ${fieldErrors.category ? "border-red-500/50" : "border-white/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-white appearance-none`}
+            className={`w-full bg-secondary border ${fieldErrors.category ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground appearance-none`}
           >
             <option value="">Select Category</option>
             {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
@@ -228,7 +228,7 @@ function SellForm() {
             required
             value={formData.condition}
             onChange={(e) => setFormData({...formData, condition: e.target.value})}
-            className={`w-full bg-[#161621] border ${fieldErrors.condition ? "border-red-500/50" : "border-white/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-white appearance-none`}
+            className={`w-full bg-secondary border ${fieldErrors.condition ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground appearance-none`}
           >
             <option value="">Select Condition</option>
             {CONDITIONS.map(cond => <option key={cond} value={cond}>{cond}</option>)}
@@ -243,7 +243,7 @@ function SellForm() {
             value={formData.location}
             onChange={(e) => setFormData({...formData, location: e.target.value})}
             placeholder="Dorm, Library, etc."
-            className={`w-full bg-white/5 border ${fieldErrors.location ? "border-red-500/50" : "border-white/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-white`}
+            className={`w-full bg-secondary border ${fieldErrors.location ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground`}
           />
           {fieldErrors.location && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.location}</p>}
         </div>
