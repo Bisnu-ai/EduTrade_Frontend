@@ -3,6 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import { ArrowRight, Zap, Shield, Repeat, Users, GraduationCap } from "lucide-react";
 import Link from "next/link";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const FloatingElement = ({ delay = 0, className = "" }) => (
   <motion.div
@@ -19,6 +20,7 @@ const FloatingElement = ({ delay = 0, className = "" }) => (
 );
 
 export default function Hero() {
+  const { isAuthenticated } = useAuthStore();
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -81,15 +83,27 @@ export default function Hero() {
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </motion.button>
             </Link>
-            <Link href="/register">
-              <motion.button
-                whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.08)" }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-foreground/5 backdrop-blur-md border border-foreground/10 text-foreground px-10 py-5 rounded-2xl font-bold transition-all text-lg"
-              >
-                Join Now
-              </motion.button>
-            </Link>
+            {isAuthenticated ? (
+              <Link href="/sell">
+                <motion.button
+                  whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.08)" }}
+                  whileTap={{ scale: 0.98 }}
+                  className="bg-foreground/5 backdrop-blur-md border border-foreground/10 text-foreground px-10 py-5 rounded-2xl font-bold transition-all text-lg"
+                >
+                  Sell an Item
+                </motion.button>
+              </Link>
+            ) : (
+              <Link href="/register">
+                <motion.button
+                  whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.08)" }}
+                  whileTap={{ scale: 0.98 }}
+                  className="bg-foreground/5 backdrop-blur-md border border-foreground/10 text-foreground px-10 py-5 rounded-2xl font-bold transition-all text-lg"
+                >
+                  Join Now
+                </motion.button>
+              </Link>
+            )}
           </motion.div>
 
           {/* Stats Section with staggered reveal */}
