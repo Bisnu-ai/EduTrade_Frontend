@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { Upload, X, Tag, DollarSign, List, Info, Loader2, Plus, Heart, FileText } from "lucide-react";
 import toast from "react-hot-toast";
 
-const CATEGORIES = ["Textbooks", "Electronics", "Dorm Essentials", "Stationery", "Fashion", "Bicycles", "Study Notes", "Others"];
+const CATEGORIES = ["Textbooks", "Electronics", "Dorm Essentials", "Stationery", "Fashion", "Bicycles", "Others"];
 const CONDITIONS = ["New", "Gently Used", "Fair", "Heavily Used"];
 
 function SellForm() {
@@ -86,12 +86,10 @@ function SellForm() {
     }
     
     setLoading(true);
-    const isNotes = formData.category === "Study Notes";
     const sanitizedData = {
       ...formData,
       category: formData.category.toLowerCase().replace(/\s+/g, "-"),
-      condition: isNotes ? "new" : formData.condition.toLowerCase().replace(/\s+/g, "-"),
-      location: isNotes ? "Digital Delivery" : formData.location,
+      condition: formData.condition.toLowerCase().replace(/\s+/g, "-"),
     };
 
     const data = new FormData();
@@ -131,16 +129,7 @@ function SellForm() {
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
           {previews.map((preview, i) => (
             <div key={i} className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 group">
-              {preview.endsWith('.pdf') || (images[i] && images[i].type === 'application/pdf') ? (
-                <div className="w-full h-full flex flex-col items-center justify-center bg-secondary gap-2">
-                  <FileText className="text-primary" size={32} />
-                  <span className="text-[8px] font-bold uppercase text-muted truncate px-2 w-full text-center">
-                    {images[i]?.name || "PDF Document"}
-                  </span>
-                </div>
-              ) : (
-                <img src={preview} alt="preview" className="w-full h-full object-cover" />
-              )}
+              <img src={preview} alt="preview" className="w-full h-full object-cover" />
               <button 
                 type="button"
                 onClick={() => removeImage(i)}
@@ -154,7 +143,7 @@ function SellForm() {
             <label className="aspect-square rounded-2xl border-2 border-dashed border-white/10 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all">
               <Plus className="text-gray-500" />
               <span className="text-[10px] font-bold text-gray-500 uppercase tracking-tighter">Add Image</span>
-              <input type="file" multiple accept="image/*,.pdf" className="hidden" onChange={handleImageChange} />
+              <input type="file" multiple accept="image/*" className="hidden" onChange={handleImageChange} />
             </label>
           )}
         </div>
@@ -233,35 +222,31 @@ function SellForm() {
           {fieldErrors.category && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.category}</p>}
         </div>
 
-        {formData.category !== "Study Notes" && (
-          <>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-300">Condition</label>
-              <select 
-                required
-                value={formData.condition}
-                onChange={(e) => setFormData({...formData, condition: e.target.value})}
-                className={`w-full bg-secondary border ${fieldErrors.condition ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground appearance-none`}
-              >
-                <option value="">Select Condition</option>
-                {CONDITIONS.map(cond => <option key={cond} value={cond}>{cond}</option>)}
-              </select>
-              {fieldErrors.condition && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.condition}</p>}
-            </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-300">Condition</label>
+          <select 
+            required
+            value={formData.condition}
+            onChange={(e) => setFormData({...formData, condition: e.target.value})}
+            className={`w-full bg-secondary border ${fieldErrors.condition ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground appearance-none`}
+          >
+            <option value="">Select Condition</option>
+            {CONDITIONS.map(cond => <option key={cond} value={cond}>{cond}</option>)}
+          </select>
+          {fieldErrors.condition && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.condition}</p>}
+        </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-300">Pickup Location</label>
-              <input 
-                required
-                value={formData.location}
-                onChange={(e) => setFormData({...formData, location: e.target.value})}
-                placeholder="Dorm, Library, etc."
-                className={`w-full bg-secondary border ${fieldErrors.location ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground`}
-              />
-              {fieldErrors.location && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.location}</p>}
-            </div>
-          </>
-        )}
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-300">Pickup Location</label>
+          <input 
+            required
+            value={formData.location}
+            onChange={(e) => setFormData({...formData, location: e.target.value})}
+            placeholder="Dorm, Library, etc."
+            className={`w-full bg-secondary border ${fieldErrors.location ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground`}
+          />
+          {fieldErrors.location && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.location}</p>}
+        </div>
       </div>
 
       <motion.button

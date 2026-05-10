@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
 import { motion, Variants } from "framer-motion";
-import { Heart, MapPin, Tag, ArrowUpRight, Edit, Trash2, FileText } from "lucide-react";
+import { Heart, MapPin, Tag, ArrowUpRight, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
@@ -134,33 +134,13 @@ export default function FeaturedProducts({
             className="glass-morphism rounded-2xl md:rounded-3xl overflow-hidden group relative transition-shadow hover:shadow-2xl hover:shadow-primary/20"
           >
             <div className="h-40 md:h-64 overflow-hidden relative">
-              {(() => {
-                const displayImage = product.images?.find(img => !img.toLowerCase().endsWith('.pdf')) || 
-                                     (product.images?.[0]?.toLowerCase().endsWith('.pdf') ? null : product.images?.[0]);
-                
-                const finalSrc = displayImage 
-                  ? (displayImage.startsWith('http') ? displayImage : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${displayImage}`)
-                  : null;
-
-                if (!finalSrc) {
-                  return (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-secondary gap-2">
-                      <FileText className="text-primary opacity-20" size={48} />
-                      <span className="text-[10px] font-bold uppercase text-muted">PDF Notes</span>
-                    </div>
-                  );
-                }
-
-                return (
-                  <Image 
-                    src={finalSrc} 
-                    alt={product.title} 
-                    fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                );
-              })()}
+              <Image 
+                src={product.images?.[0] ? (product.images[0].startsWith('http') ? product.images[0] : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${product.images[0]}`) : 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop'} 
+                alt={product.title} 
+                fill
+                sizes="(max-width: 768px) 50vw, 25vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+              />
               
               {/* Overlay Actions */}
               <div className="absolute top-2 md:top-4 right-2 md:right-4 flex flex-col gap-2 z-20">
@@ -185,16 +165,9 @@ export default function FeaturedProducts({
                 )}
               </div>
 
-              <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 flex gap-2">
                 <span className="px-2 py-0.5 md:px-3 md:py-1 rounded-full bg-primary/80 backdrop-blur-md text-[8px] md:text-[10px] font-bold uppercase tracking-wider">
                   {product.category}
                 </span>
-                {product.category === "study-notes" && (
-                  <span className="px-2 py-0.5 md:px-3 md:py-1 rounded-full bg-green-500/80 backdrop-blur-md text-[8px] md:text-[10px] font-bold uppercase tracking-wider">
-                    Verified Notes
-                  </span>
-                )}
-              </div>
             </div>
             
             <div className="p-3 md:p-5">

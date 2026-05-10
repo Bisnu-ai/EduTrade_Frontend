@@ -15,9 +15,7 @@ import {
   Clock, 
   ChevronLeft,
   ChevronRight,
-  Loader2,
-  FileDown,
-  FileText
+  Loader2
 } from "lucide-react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { formatDate } from "@/lib/utils";
@@ -35,18 +33,6 @@ export default function ProductDetailPage() {
   const [activeImage, setActiveImage] = useState(0);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const { user: currentUser } = useAuthStore();
-
-  const isOwner = currentUser?._id === product?.seller?._id;
-  const isBuyer = currentUser?._id === product?.soldTo;
-  const canDownload = (isOwner || isBuyer) && product?.category === "study-notes";
-  
-  const displayImages = product?.images?.filter((img: string) => !img.toLowerCase().endsWith('.pdf')) || [];
-  const pdfUrl = product?.images?.find((img: string) => img.toLowerCase().endsWith('.pdf'));
-  
-  const getImageUrl = (img: string) => {
-    if (!img) return 'https://images.unsplash.com/photo-1544640808-32ca72ac7f37?w=800&auto=format&fit=crop';
-    return img.startsWith('http') ? img : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${img}`;
-  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -103,29 +89,22 @@ export default function ProductDetailPage() {
         {/* Image Gallery */}
         <div className="space-y-4 md:space-y-6">
           <div className="relative aspect-[4/3] md:aspect-square rounded-[32px] md:rounded-[40px] overflow-hidden glass-morphism group">
-             {displayImages.length > 0 ? (
-               <img 
-                 src={getImageUrl(displayImages[activeImage])} 
-                 alt={product.title} 
-                 className="w-full h-full object-cover"
-               />
-             ) : (
-               <div className="w-full h-full flex flex-col items-center justify-center bg-secondary gap-4">
-                 <FileText className="text-primary opacity-20" size={64} />
-                 <span className="font-bold text-muted uppercase tracking-widest">Digital PDF Document</span>
-               </div>
-             )}
+             <img 
+               src={product.images[activeImage].startsWith('http') ? product.images[activeImage] : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${product.images[activeImage]}`} 
+               alt={product.title} 
+               className="w-full h-full object-cover"
+             />
              
-             {displayImages.length > 1 && (
+             {product.images.length > 1 && (
                <div className="absolute inset-0 flex items-center justify-between px-4 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
                  <button 
-                   onClick={() => setActiveImage(prev => prev === 0 ? displayImages.length - 1 : prev - 1)}
+                   onClick={() => setActiveImage(prev => prev === 0 ? product.images.length - 1 : prev - 1)}
                    className="w-10 h-10 md:w-12 md:h-12 bg-black/50 backdrop-blur-md rounded-full flex items-center justify-center text-white"
                  >
                    <ChevronLeft size={20} />
                  </button>
                  <button 
-                   onClick={() => setActiveImage(prev => (prev + 1) % displayImages.length)}
+                   onClick={() => setActiveImage(prev => (prev + 1) % product.images.length)}
                    className="w-10 h-10 md:w-12 md:h-12 bg-black/50 backdrop-blur-md rounded-full flex items-center justify-center text-white"
                  >
                    <ChevronRight size={20} />
@@ -134,21 +113,19 @@ export default function ProductDetailPage() {
              )}
           </div>
           
-          {displayImages.length > 1 && (
-            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-              {displayImages.map((img: string, i: number) => (
-                <button 
-                  key={i}
-                  onClick={() => setActiveImage(i)}
-                  className={`w-16 h-16 md:w-24 md:h-24 rounded-xl md:rounded-2xl overflow-hidden flex-shrink-0 border-2 transition-all ${
-                    activeImage === i ? "border-primary" : "border-transparent opacity-50"
-                  }`}
-                >
-                  <img src={getImageUrl(img)} className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+            {product.images.map((img: string, i: number) => (
+              <button 
+                key={i}
+                onClick={() => setActiveImage(i)}
+                className={`w-16 h-16 md:w-24 md:h-24 rounded-xl md:rounded-2xl overflow-hidden flex-shrink-0 border-2 transition-all ${
+                  activeImage === i ? "border-primary" : "border-transparent opacity-50"
+                }`}
+              >
+                <img src={img.startsWith('http') ? img : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${img}`} className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Product Info */}
@@ -242,31 +219,7 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Download Section for Study Notes */}
-          {canDownload && pdfUrl && (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="bg-blue-500/10 border border-blue-500/30 p-6 rounded-[32px] flex flex-col items-center gap-4 text-center mt-4"
-            >
-              <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
-                <FileDown size={32} />
-              </div>
-              <div>
-                <h4 className="font-bold text-lg mb-1">Your Study Material is Ready</h4>
-                <p className="text-sm text-blue-400">Download the verified PDF notes below.</p>
-              </div>
-              <a 
-                href={pdfUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white py-4 rounded-2xl font-black flex items-center justify-center gap-2 transition-all"
-              >
-                Download PDF Notes
-              </a>
-            </motion.div>
-          )}
+
           
           <div className="flex items-center gap-2 text-[10px] text-gray-500 justify-center">
             <ShieldCheck size={12} className="text-green-500" /> Secure Campus Trade Policy Active
