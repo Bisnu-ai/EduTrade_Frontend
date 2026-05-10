@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { Upload, X, Tag, DollarSign, List, Info, Loader2, Plus, Heart } from "lucide-react";
 import toast from "react-hot-toast";
 
-const CATEGORIES = ["Textbooks", "Electronics", "Dorm Essentials", "Stationery", "Fashion", "Bicycles", "Others"];
+const CATEGORIES = ["Textbooks", "Electronics", "Dorm Essentials", "Stationery", "Fashion", "Bicycles", "Study Notes", "Others"];
 const CONDITIONS = ["New", "Gently Used", "Fair", "Heavily Used"];
 
 function SellForm() {

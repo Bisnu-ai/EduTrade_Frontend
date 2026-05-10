@@ -22,6 +22,8 @@ interface Product {
     _id: string;
     name: string;
     avatar?: string;
+    badges?: string[];
+    trustScore?: number;
   };
   isDonation?: boolean;
 }
@@ -163,10 +165,15 @@ export default function FeaturedProducts({
                 )}
               </div>
 
-              <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4">
+              <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 flex gap-2">
                 <span className="px-2 py-0.5 md:px-3 md:py-1 rounded-full bg-primary/80 backdrop-blur-md text-[8px] md:text-[10px] font-bold uppercase tracking-wider">
                   {product.category}
                 </span>
+                {product.category === "study-notes" && (
+                  <span className="px-2 py-0.5 md:px-3 md:py-1 rounded-full bg-green-500/80 backdrop-blur-md text-[8px] md:text-[10px] font-bold uppercase tracking-wider">
+                    Verified Notes
+                  </span>
+                )}
               </div>
             </div>
             
@@ -183,7 +190,18 @@ export default function FeaturedProducts({
                     )}
                   </div>
                   <div className="flex-1 min-w-0 flex flex-col">
-                    <p className="text-[10px] md:text-xs font-bold truncate text-foreground/90">{product.seller?.name || "User"}</p>
+                    <div className="flex items-center gap-1">
+                      <p className="text-[10px] md:text-xs font-bold truncate text-foreground/90">{product.seller?.name || "User"}</p>
+                      {product.seller?.badges && product.seller.badges.length > 0 && (
+                        <div className="flex gap-0.5">
+                          {product.seller.badges.slice(0, 1).map((badge, idx) => (
+                            <span key={idx} className="text-[6px] md:text-[8px] bg-yellow-500/20 text-yellow-600 px-1 rounded-sm font-bold uppercase">
+                              {badge}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                     <span className="text-[8px] md:text-[9px] text-muted">{formatDate(product.createdAt)}</span>
                   </div>
                 </div>

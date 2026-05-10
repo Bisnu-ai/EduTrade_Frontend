@@ -12,6 +12,8 @@ interface User {
   year?: string;
   bio?: string;
   dob?: string;
+  trustScore?: number;
+  badges?: string[];
   role: "user" | "admin";
 }
 
