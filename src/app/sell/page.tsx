@@ -86,10 +86,12 @@ function SellForm() {
     }
     
     setLoading(true);
+    const isNotes = formData.category === "Study Notes";
     const sanitizedData = {
       ...formData,
       category: formData.category.toLowerCase().replace(/\s+/g, "-"),
-      condition: formData.condition.toLowerCase().replace(/\s+/g, "-"),
+      condition: isNotes ? "new" : formData.condition.toLowerCase().replace(/\s+/g, "-"),
+      location: isNotes ? "Digital Delivery" : formData.location,
     };
 
     const data = new FormData();
@@ -231,31 +233,35 @@ function SellForm() {
           {fieldErrors.category && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.category}</p>}
         </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-300">Condition</label>
-          <select 
-            required
-            value={formData.condition}
-            onChange={(e) => setFormData({...formData, condition: e.target.value})}
-            className={`w-full bg-secondary border ${fieldErrors.condition ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground appearance-none`}
-          >
-            <option value="">Select Condition</option>
-            {CONDITIONS.map(cond => <option key={cond} value={cond}>{cond}</option>)}
-          </select>
-          {fieldErrors.condition && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.condition}</p>}
-        </div>
+        {formData.category !== "Study Notes" && (
+          <>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300">Condition</label>
+              <select 
+                required
+                value={formData.condition}
+                onChange={(e) => setFormData({...formData, condition: e.target.value})}
+                className={`w-full bg-secondary border ${fieldErrors.condition ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground appearance-none`}
+              >
+                <option value="">Select Condition</option>
+                {CONDITIONS.map(cond => <option key={cond} value={cond}>{cond}</option>)}
+              </select>
+              {fieldErrors.condition && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.condition}</p>}
+            </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-300">Pickup Location</label>
-          <input 
-            required
-            value={formData.location}
-            onChange={(e) => setFormData({...formData, location: e.target.value})}
-            placeholder="Dorm, Library, etc."
-            className={`w-full bg-secondary border ${fieldErrors.location ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground`}
-          />
-          {fieldErrors.location && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.location}</p>}
-        </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300">Pickup Location</label>
+              <input 
+                required
+                value={formData.location}
+                onChange={(e) => setFormData({...formData, location: e.target.value})}
+                placeholder="Dorm, Library, etc."
+                className={`w-full bg-secondary border ${fieldErrors.location ? "border-red-500/50" : "border-foreground/10"} rounded-2xl py-4 px-6 outline-none focus:border-primary/50 transition-all text-foreground`}
+              />
+              {fieldErrors.location && <p className="text-red-500 text-xs font-bold px-2">{fieldErrors.location}</p>}
+            </div>
+          </>
+        )}
       </div>
 
       <motion.button
