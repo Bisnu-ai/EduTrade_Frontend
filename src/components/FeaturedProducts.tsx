@@ -134,13 +134,33 @@ export default function FeaturedProducts({
             className="glass-morphism rounded-2xl md:rounded-3xl overflow-hidden group relative transition-shadow hover:shadow-2xl hover:shadow-primary/20"
           >
             <div className="h-40 md:h-64 overflow-hidden relative">
-              <Image 
-                src={product.images?.[0] ? (product.images[0].startsWith('http') ? product.images[0] : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${product.images[0]}`) : 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop'} 
-                alt={product.title} 
-                fill
-                sizes="(max-width: 768px) 50vw, 25vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-              />
+              {(() => {
+                const displayImage = product.images?.find(img => !img.toLowerCase().endsWith('.pdf')) || 
+                                     (product.images?.[0]?.toLowerCase().endsWith('.pdf') ? null : product.images?.[0]);
+                
+                const finalSrc = displayImage 
+                  ? (displayImage.startsWith('http') ? displayImage : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${displayImage}`)
+                  : null;
+
+                if (!finalSrc) {
+                  return (
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-secondary gap-2">
+                      <FileText className="text-primary opacity-20" size={48} />
+                      <span className="text-[10px] font-bold uppercase text-muted">PDF Notes</span>
+                    </div>
+                  );
+                }
+
+                return (
+                  <Image 
+                    src={finalSrc} 
+                    alt={product.title} 
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                );
+              })()}
               
               {/* Overlay Actions */}
               <div className="absolute top-2 md:top-4 right-2 md:right-4 flex flex-col gap-2 z-20">
