@@ -198,9 +198,6 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Actions */}
-            </div>
-          </div>
-
           <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <button 
               onClick={handleChat}
