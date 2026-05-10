@@ -43,8 +43,14 @@ export default function RegisterPage() {
 
     try {
       const { data } = await api.post("/auth/register", formData);
-      toast.success(data.message || "Registration successful! Welcome 🎓");
-      router.push("/login");
+      toast.success(data.message || "OTP sent to your email! 📧");
+      
+      sessionStorage.setItem("pendingVerification", JSON.stringify({
+        userId: data.data.userId,
+        email: data.data.email
+      }));
+      
+      router.push("/register/verify");
     } catch (error: any) {
       const message = error.response?.data?.message || "Registration failed";
       toast.error(message);
