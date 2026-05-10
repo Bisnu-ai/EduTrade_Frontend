@@ -16,7 +16,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Loader2,
-  FileDown
+  FileDown,
+  FileText
 } from "lucide-react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { formatDate } from "@/lib/utils";
