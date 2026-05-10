@@ -5,7 +5,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/lib/api";
 import { motion } from "framer-motion";
-import { Upload, X, Tag, DollarSign, List, Info, Loader2, Plus, Heart } from "lucide-react";
+import { Upload, X, Tag, DollarSign, List, Info, Loader2, Plus, Heart, FileText } from "lucide-react";
 import toast from "react-hot-toast";
 
 const CATEGORIES = ["Textbooks", "Electronics", "Dorm Essentials", "Stationery", "Fashion", "Bicycles", "Study Notes", "Others"];
@@ -129,7 +129,16 @@ function SellForm() {
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
           {previews.map((preview, i) => (
             <div key={i} className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 group">
-              <img src={preview} alt="preview" className="w-full h-full object-cover" />
+              {preview.endsWith('.pdf') || (images[i] && images[i].type === 'application/pdf') ? (
+                <div className="w-full h-full flex flex-col items-center justify-center bg-secondary gap-2">
+                  <FileText className="text-primary" size={32} />
+                  <span className="text-[8px] font-bold uppercase text-muted truncate px-2 w-full text-center">
+                    {images[i]?.name || "PDF Document"}
+                  </span>
+                </div>
+              ) : (
+                <img src={preview} alt="preview" className="w-full h-full object-cover" />
+              )}
               <button 
                 type="button"
                 onClick={() => removeImage(i)}
@@ -143,7 +152,7 @@ function SellForm() {
             <label className="aspect-square rounded-2xl border-2 border-dashed border-white/10 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all">
               <Plus className="text-gray-500" />
               <span className="text-[10px] font-bold text-gray-500 uppercase tracking-tighter">Add Image</span>
-              <input type="file" multiple accept="image/*" className="hidden" onChange={handleImageChange} />
+              <input type="file" multiple accept="image/*,.pdf" className="hidden" onChange={handleImageChange} />
             </label>
           )}
         </div>
