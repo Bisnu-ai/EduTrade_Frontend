@@ -126,11 +126,11 @@ function MarketplaceContent() {
         {/* Product Grid / Main Content */}
         <main className="px-0 md:px-0">
            {isLoading ? (
-             <div className="-mt-12">
+             <div>
                <ProductGridSkeleton />
              </div>
            ) : products.length > 0 ? (
-             <div className="-mt-12">
+             <div>
                <FeaturedProducts manualProducts={products} title="" subtitle="" showAllLink={false} />
              </div>
            ) : (
