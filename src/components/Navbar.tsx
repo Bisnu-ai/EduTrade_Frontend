@@ -90,7 +90,7 @@ export default function Navbar() {
           <input 
             type="text" 
             placeholder="Search..." 
-            className="bg-transparent border-none outline-none text-sm ml-2 w-full text-foreground"
+            className="bg-transparent border-none outline-none text-sm ml-3 w-full text-foreground"
           />
         </div>
 

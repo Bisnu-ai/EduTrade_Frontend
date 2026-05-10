@@ -68,7 +68,7 @@ function MarketplaceContent() {
               placeholder="Search items..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="input-field pl-10 md:pl-12 py-2.5 md:py-3 text-sm"
+              className="input-field !pl-11 md:!pl-14 py-2.5 md:py-3 text-sm"
             />
           </div>
           <button className="p-2.5 md:p-3 glass-morphism rounded-xl md:rounded-2xl hover:bg-primary/10 hover:text-primary transition-all">
