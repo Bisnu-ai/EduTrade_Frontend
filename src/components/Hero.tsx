@@ -99,10 +99,9 @@ export default function Hero() {
             </span>
           </motion.div>
 
-          <motion.h1 variants={itemVariants} className="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9] relative">
+          <motion.h1 variants={itemVariants} className="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9]">
             Trade, Save, & <br />
             <span className="gradient-text italic font-serif">Level Up Campus</span>
-            <span className="absolute -top-6 right-0 md:-right-10 bg-green-500 text-[10px] text-white px-2 py-1 rounded-full font-black animate-pulse uppercase tracking-widest">Live Data</span>
           </motion.h1>
 
           <motion.p variants={itemVariants} className="text-base md:text-xl text-muted max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
