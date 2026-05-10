@@ -21,7 +21,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       router.replace("/login");
     }
     if (isAuth && isAuthenticated) {
-      router.replace("/");
+      const { user } = useAuthStore.getState();
+      const needsUpdate = !user?.college || user?.college === "CampusKart University" || !user?.year;
+      
+      if (needsUpdate) {
+        router.replace("/profile/complete");
+      } else {
+        router.replace("/");
+      }
     }
     if (isProductDetail && !isAuthenticated) {
       router.replace("/login");
