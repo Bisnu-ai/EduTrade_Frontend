@@ -10,6 +10,7 @@ import { User, Mail, Lock, Phone, GraduationCap, ArrowRight, Loader2, Eye, EyeOf
 import toast from "react-hot-toast";
 import axios from "axios";
 import { LOCAL_COLLEGES } from "@/constants/colleges";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -264,6 +265,14 @@ export default function RegisterPage() {
             )}
           </motion.button>
         </form>
+
+        <div className="flex items-center gap-4 my-6">
+          <div className="flex-1 h-px bg-foreground/10" />
+          <span className="text-xs text-muted font-medium">OR</span>
+          <div className="flex-1 h-px bg-foreground/10" />
+        </div>
+
+        <GoogleSignInButton mode="register" />
 
         <p className="text-center mt-8 text-muted text-sm">
           Already have an account? <Link href="/login" className="text-primary font-bold hover:underline">Log in here</Link>

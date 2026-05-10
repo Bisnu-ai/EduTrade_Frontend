@@ -8,6 +8,7 @@ import api from "@/lib/api";
 import { motion } from "framer-motion";
 import { Mail, Lock, ArrowRight, Loader2, Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -111,6 +112,14 @@ export default function LoginPage() {
             )}
           </motion.button>
         </form>
+
+        <div className="flex items-center gap-4 my-6">
+          <div className="flex-1 h-px bg-foreground/10" />
+          <span className="text-xs text-muted font-medium">OR</span>
+          <div className="flex-1 h-px bg-foreground/10" />
+        </div>
+
+        <GoogleSignInButton mode="login" />
 
         <p className="text-center mt-8 text-muted text-sm">
           Don't have an account? <Link href="/register" className="text-primary font-bold hover:underline">Sign up for free</Link>

@@ -18,6 +18,7 @@ import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthProvider";
 import ChatBot from "@/components/ChatBot";
+import GoogleAuthProvider from "@/components/GoogleAuthProvider";
 
 export default function RootLayout({
   children,
@@ -33,6 +34,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <GoogleAuthProvider>
           <AuthProvider>
             <Navbar />
             <main>{children}</main>
@@ -47,6 +49,7 @@ export default function RootLayout({
               },
             }} />
           </AuthProvider>
+          </GoogleAuthProvider>
         </ThemeProvider>
       </body>
     </html>
