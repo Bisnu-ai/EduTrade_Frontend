@@ -15,8 +15,10 @@ import {
   Clock, 
   ChevronLeft,
   ChevronRight,
-  Loader2
+  Loader2,
+  FileDown
 } from "lucide-react";
+import { useAuthStore } from "@/store/useAuthStore";
 import { formatDate } from "@/lib/utils";
 import toast from "react-hot-toast";
 
@@ -31,6 +33,12 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const { user: currentUser } = useAuthStore();
+
+  const isOwner = currentUser?._id === product?.seller?._id;
+  const isBuyer = currentUser?._id === product?.soldTo;
+  const canDownload = (isOwner || isBuyer) && product?.category === "study-notes";
+  const pdfUrl = product?.images?.find((img: string) => img.toLowerCase().endsWith('.pdf'));
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -190,6 +198,9 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Actions */}
+            </div>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <button 
               onClick={handleChat}
@@ -216,6 +227,32 @@ export default function ProductDetailPage() {
               </button>
             </div>
           </div>
+
+          {/* Download Section for Study Notes */}
+          {canDownload && pdfUrl && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="bg-blue-500/10 border border-blue-500/30 p-6 rounded-[32px] flex flex-col items-center gap-4 text-center mt-4"
+            >
+              <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
+                <FileDown size={32} />
+              </div>
+              <div>
+                <h4 className="font-bold text-lg mb-1">Your Study Material is Ready</h4>
+                <p className="text-sm text-blue-400">Download the verified PDF notes below.</p>
+              </div>
+              <a 
+                href={pdfUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white py-4 rounded-2xl font-black flex items-center justify-center gap-2 transition-all"
+              >
+                Download PDF Notes
+              </a>
+            </motion.div>
+          )}
           
           <div className="flex items-center gap-2 text-[10px] text-gray-500 justify-center">
             <ShieldCheck size={12} className="text-green-500" /> Secure Campus Trade Policy Active
