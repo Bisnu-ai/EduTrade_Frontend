@@ -40,7 +40,7 @@ export default function VerifyOTPPage() {
       });
       
       setAuth(data.data.user, data.token);
-      toast.success("Account verified! Welcome to EduTrade 🎓");
+      toast.success("Account verified! Welcome to CampusKart 🎓");
       sessionStorage.removeItem("pendingVerification");
       router.push("/");
     } catch (error: any) {

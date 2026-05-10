@@ -155,7 +155,7 @@ function ChatContent() {
     doc.setTextColor(255, 255, 255);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(28);
-    doc.text("EduTrade", 20, 32);
+    doc.text("CampusKart", 20, 32);
     
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
@@ -213,8 +213,8 @@ function ChatContent() {
     y += 5;
     doc.setFontSize(9);
     doc.setTextColor(100, 100, 100);
-    doc.text(u.college || "EduTrade Member", 20, y);
-    doc.text(r.college || "EduTrade Member", 110, y);
+    doc.text(u.college || "CampusKart Member", 20, y);
+    doc.text(r.college || "CampusKart Member", 110, y);
 
     // ── Footer ──
     const footerY = 270;
@@ -234,7 +234,7 @@ function ChatContent() {
     doc.setFontSize(8);
     doc.text("VERIFIED", 175, 271, { align: "center" });
 
-    doc.save(`EduTrade_Receipt_${p.title.replace(/\s+/g, "_")}.pdf`);
+    doc.save(`CampusKart_Receipt_${p.title.replace(/\s+/g, "_")}.pdf`);
   };
 
   const handleMarkAsSold = async () => {

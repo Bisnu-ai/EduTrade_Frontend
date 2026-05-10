@@ -52,7 +52,7 @@ export default function ProductDetailPage() {
     if (navigator.share) {
       navigator.share({
         title: product.title,
-        text: `Check out this ${product.title} on EduTrade!`,
+        text: `Check out this ${product.title} on CampusKart!`,
         url: window.location.href,
       }).catch(() => toast.error("Failed to share"));
     } else {

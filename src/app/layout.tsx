@@ -7,7 +7,7 @@ import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "EduTrade | Secure Campus Marketplace 🎓",
+  title: "CampusKart | Secure Campus Marketplace 🎓",
   description: "The official marketplace for college students. Buy, sell, and trade textbooks, electronics, and dorm essentials with verified students in your campus.",
   icons: {
     icon: "/favicon.ico?v=2",

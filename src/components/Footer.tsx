@@ -12,9 +12,9 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start gap-4">
             <Link href="/" className="flex items-center gap-3 group">
               <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
-                <img src="/logo.png" alt="EduTrade Logo" className="w-full h-full object-cover" />
+                <img src="/logo.png" alt="CampusKart Logo" className="w-full h-full object-cover" />
               </div>
-              <span className="text-2xl font-black tracking-tighter text-white">EduTrade</span>
+              <span className="text-2xl font-black tracking-tighter text-white">CampusKart</span>
             </Link>
             <p className="text-sm text-gray-500 max-w-xs text-center md:text-left">
               The most trusted campus marketplace for students to buy, sell, and trade.
@@ -47,7 +47,7 @@ export default function Footer() {
         {/* Combined Bottom Bar */}
         <div className="pt-8 border-t border-white/5 text-center">
           <p className="text-xs text-gray-600 font-medium tracking-wide">
-            &copy; {new Date().getFullYear()} EduTrade. Built for students, by students.
+            &copy; {new Date().getFullYear()} CampusKart. Built for students, by students.
           </p>
         </div>
       </div>

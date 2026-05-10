@@ -168,7 +168,7 @@ export default function AdminPage() {
         </div>
         <div>
           <h1 className="text-3xl font-black">Admin Panel</h1>
-          <p className="text-gray-500 text-sm">EduTrade control centre</p>
+          <p className="text-gray-500 text-sm">CampusKart control centre</p>
         </div>
       </div>
 

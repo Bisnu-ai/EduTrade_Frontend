@@ -12,7 +12,7 @@ export default function ChatBot() {
   const [message, setMessage] = useState("");
   const [history, setHistory] = useState<{role: string, parts: {text: string}[]}[]>([]);
   const [chat, setChat] = useState<{role: string, text: string}[]>([
-    { role: "model", text: "Hi! I'm EduBot. Ask me anything about EduTrade! 🎓" }
+    { role: "model", text: "Hi! I'm CampusBot. Ask me anything about CampusKart! 🎓" }
   ]);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -76,7 +76,7 @@ export default function ChatBot() {
                   <Bot size={22} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="text-white font-bold text-sm">EduBot AI</h3>
+                  <h3 className="text-white font-bold text-sm">CampusBot AI</h3>
                   <div className="flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
                     <span className="text-white/60 text-[10px] font-bold uppercase tracking-wider">Online</span>

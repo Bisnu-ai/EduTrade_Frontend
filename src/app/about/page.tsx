@@ -17,7 +17,7 @@ export default function AboutPage() {
             <span className="text-primary italic">for Students.</span>
           </motion.h1>
           <p className="text-gray-400 text-xl leading-relaxed">
-            EduTrade is more than just a marketplace. It's a platform designed to make 
+            CampusKart is more than just a marketplace. It's a platform designed to make 
             college life more affordable, sustainable, and connected.
           </p>
         </div>

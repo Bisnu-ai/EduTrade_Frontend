@@ -37,7 +37,7 @@ export default function HowItWorksPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-5xl font-black mb-6 tracking-tight"
           >
-            How <span className="text-primary">EduTrade</span> Works
+            How <span className="text-primary">CampusKart</span> Works
           </motion.h1>
           <p className="text-gray-400 text-xl max-w-2xl mx-auto">
             The simplest and safest way to buy and sell within your college community.
