@@ -22,7 +22,12 @@ function GoogleButton({ mode, loading, setLoading }: { mode: string, loading: bo
         });
         setAuth(data.data.user, data.token);
         toast.success(data.message || "Welcome to CampusKart! 🎓");
-        router.push("/");
+        
+        if (data.needsProfileUpdate) {
+          router.push("/profile/complete");
+        } else {
+          router.push("/");
+        }
       } catch (error: any) {
         toast.error(error.response?.data?.message || "Google sign-in failed");
       } finally {
