@@ -182,11 +182,11 @@ export default function FeaturedProducts({
                         </div>
                     )}
                   </div>
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 max-w-[100px] md:max-w-[150px]">
                     <p className="text-[10px] md:text-xs font-bold truncate text-foreground/90">{product.seller?.name || "User"}</p>
                   </div>
                 </div>
-                <span className="text-[8px] md:text-[10px] text-muted flex-shrink-0 ml-2">{formatDate(product.createdAt)}</span>
+                <span className="text-[8px] md:text-[10px] text-muted flex-shrink-0 ml-auto pl-2">{formatDate(product.createdAt)}</span>
               </div>
               
               <h3 className="text-xs md:text-base font-bold mb-1 md:mb-2 line-clamp-1">{product.title}</h3>
