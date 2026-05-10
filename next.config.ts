@@ -24,6 +24,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'http',
         hostname: 'edutrade-backend-z66g.onrender.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
       }
     ],
   },

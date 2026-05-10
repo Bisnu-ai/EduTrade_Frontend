@@ -120,7 +120,7 @@ export default function Navbar() {
                 className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border-2 border-white/10 hover:border-primary transition-all flex items-center justify-center bg-secondary relative"
                >
                  {user?.avatar ? (
-                   <Image src={user.avatar} alt={user.name} fill className="object-cover" />
+                   <Image src={user.avatar} alt={user.name} fill sizes="40px" className="object-cover" />
                  ) : (
                    <div className="w-full h-full flex items-center justify-center text-primary font-bold text-xs md:text-sm">
                      {user?.name.charAt(0)}
