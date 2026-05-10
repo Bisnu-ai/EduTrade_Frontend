@@ -80,8 +80,13 @@ export default function GoogleSignInButton({ mode = "login" }: { mode?: "login" 
   const [clientId, setClientId] = useState<string | null>(null);
 
   useEffect(() => {
+    // Debugging environment variables
     const id = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-    console.log("Google Client ID check:", id ? "Found ✅" : "Not Found ❌");
+    console.log("Next.js ENV Check:", {
+      idFound: !!id,
+      idPrefix: id ? id.substring(0, 10) + "..." : "none",
+      allEnvKeys: Object.keys(process.env).filter(key => key.startsWith('NEXT_PUBLIC_'))
+    });
     setClientId(id || null);
   }, []);
 
