@@ -46,7 +46,7 @@ export default function RegisterPage() {
       toast.success(data.message || "OTP sent to your email! 📧");
       
       sessionStorage.setItem("pendingVerification", JSON.stringify({
-        userId: data.data.userId,
+        userId: data.data.pendingId || data.data.userId,
         email: data.data.email
       }));
       
