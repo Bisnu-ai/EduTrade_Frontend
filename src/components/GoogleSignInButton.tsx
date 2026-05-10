@@ -80,7 +80,7 @@ export default function GoogleSignInButton({ mode = "login" }: { mode?: "login" 
   const [clientId, setClientId] = useState<string | null>(null);
 
   useEffect(() => {
-    const id = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "28985235567-969dv0id2j4rd8i7vcjv312seu3a85fi.apps.googleusercontent.com";
+    const id = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
     console.log("Google Client ID check:", id ? "Found ✅" : "Not Found ❌");
     setClientId(id || null);
   }, []);
