@@ -182,17 +182,17 @@ export default function FeaturedProducts({
                         </div>
                     )}
                   </div>
-                  <span className="text-[10px] md:text-xs text-gray-400 font-medium truncate max-w-[60px] md:max-w-none">{product.seller?.name || "Unknown"}</span>
+                  <span className="text-[10px] md:text-xs text-muted font-medium truncate max-w-[60px] md:max-w-none">{product.seller?.name || "Unknown"}</span>
                 </div>
-                <span className="text-[9px] md:text-xs text-gray-500">{formatDate(product.createdAt)}</span>
+                <span className="text-[9px] md:text-xs text-muted">{formatDate(product.createdAt)}</span>
               </div>
               
               <h3 className="text-xs md:text-base font-bold mb-1 md:mb-2 line-clamp-1">{product.title}</h3>
-              <div className={`text-lg md:text-2xl font-black mb-2 md:mb-4 ${product.isDonation ? "text-red-500" : "text-white"}`}>
+              <div className={`text-lg md:text-2xl font-black mb-2 md:mb-4 ${product.isDonation ? "text-red-500" : "text-foreground"}`}>
                 {product.isDonation ? "FREE" : `₹${product.price}`}
               </div>
               
-              <div className="flex items-center gap-2 md:gap-4 text-[9px] md:text-xs text-gray-500">
+              <div className="flex items-center gap-2 md:gap-4 text-[9px] md:text-xs text-muted">
                 <span className="flex items-center gap-1">
                   <Tag size={10} className="md:w-[12px]" /> {product.condition}
                 </span>

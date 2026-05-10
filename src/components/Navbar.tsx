@@ -66,14 +66,14 @@ export default function Navbar() {
         >
           <Image src="/logo.png" alt="CampusKart Logo" fill className="object-cover" priority />
         </motion.div>
-        <span className="text-lg md:text-xl font-black tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">CampusKart</span>
+        <span className="text-lg md:text-xl font-black tracking-tight bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">CampusKart</span>
       </Link>
 
       {/* Desktop Navigation */}
-      <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-400">
-        <Link href="/products" className="hover:text-white transition-colors">Marketplace</Link>
-        <Link href="/how-it-works" className="hover:text-white transition-colors">How it works</Link>
-        <Link href="/about" className="hover:text-white transition-colors">About</Link>
+      <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-muted">
+        <Link href="/products" className="hover:text-foreground transition-colors">Marketplace</Link>
+        <Link href="/how-it-works" className="hover:text-foreground transition-colors">How it works</Link>
+        <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
       </div>
 
       {/* Right Side Actions */}
@@ -166,12 +166,12 @@ export default function Navbar() {
           </div>
         ) : (
           <div className="hidden md:flex items-center gap-2">
-            <Link href="/login" className="px-4 py-2 text-sm font-medium hover:text-white transition-colors">Login</Link>
+            <Link href="/login" className="px-4 py-2 text-sm font-medium hover:text-foreground/80 transition-colors">Login</Link>
             <Link href="/register">
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white text-black px-4 py-2 rounded-full text-sm font-bold"
+                className="bg-foreground text-background px-4 py-2 rounded-full text-sm font-bold"
               >
                 Sign Up
               </motion.button>
@@ -249,7 +249,7 @@ export default function Navbar() {
               
               {!isAuthenticated ? (
                 <div className="flex flex-col gap-3 mt-auto">
-                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="p-4 text-center text-white font-bold hover:bg-white/5 rounded-2xl">Login</Link>
+                  <Link href="/login" className="p-4 text-center text-white font-bold hover:bg-white/5 rounded-2xl">Login</Link>
                   <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="p-4 text-center bg-white text-black rounded-2xl font-bold">Get Started</Link>
                 </div>
               ) : (

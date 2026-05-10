@@ -54,9 +54,9 @@ export default function Hero() {
           animate="visible"
           className="text-center"
         >
-          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8">
+          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-foreground/5 border border-foreground/10 backdrop-blur-md mb-8">
             <GraduationCap size={14} className="text-primary" />
-            <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-gray-300">
+            <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-muted">
               Exclusive Campus Marketplace
             </span>
           </motion.div>
@@ -66,7 +66,7 @@ export default function Hero() {
             <span className="gradient-text italic font-serif">Level Up Campus</span>
           </motion.h1>
 
-          <motion.p variants={itemVariants} className="text-base md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
+          <motion.p variants={itemVariants} className="text-base md:text-xl text-muted max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
             Join thousands of students trading textbooks, gadgets, and dorm essentials securely within their own college community.
           </motion.p>
 
@@ -85,7 +85,7 @@ export default function Hero() {
               <motion.button
                 whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.08)" }}
                 whileTap={{ scale: 0.98 }}
-                className="bg-white/5 backdrop-blur-md border border-white/10 text-white px-10 py-5 rounded-2xl font-bold transition-all text-lg"
+                className="bg-foreground/5 backdrop-blur-md border border-foreground/10 text-foreground px-10 py-5 rounded-2xl font-bold transition-all text-lg"
               >
                 Join Now
               </motion.button>
@@ -107,13 +107,13 @@ export default function Hero() {
                 key={i} 
                 variants={itemVariants}
                 whileHover={{ y: -5, backgroundColor: "rgba(255,255,255,0.05)" }}
-                className="glass-morphism p-8 rounded-[32px] group text-left border border-white/5 transition-colors"
+                className="glass-morphism p-8 rounded-[32px] group text-left border border-foreground/5 transition-colors"
               >
                 <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:rotate-[10deg] transition-all duration-500">
                   <stat.icon className="text-primary group-hover:text-white transition-colors" size={28} />
                 </div>
                 <div className="text-3xl font-black mb-1 tracking-tight">{stat.value}</div>
-                <div className="text-[10px] text-gray-500 font-black uppercase tracking-[0.15em]">{stat.label}</div>
+                <div className="text-[10px] text-muted font-black uppercase tracking-[0.15em]">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>

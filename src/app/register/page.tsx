@@ -218,14 +218,14 @@ export default function RegisterPage() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="absolute left-0 right-0 top-full mt-2 glass-morphism rounded-2xl overflow-hidden z-50 border border-white/10 shadow-2xl max-h-60 overflow-y-auto"
+                  className="absolute left-0 right-0 top-full mt-2 glass-morphism rounded-2xl overflow-hidden z-50 border border-foreground/10 shadow-2xl max-h-60 overflow-y-auto"
                 >
                   {filteredColleges.map((c, i) => (
                     <button
                       key={i}
                       type="button"
                       onClick={() => handleSelectCollege(c)}
-                      className="w-full text-left px-5 py-3 text-sm hover:bg-primary/10 hover:text-primary transition-all border-b border-white/5 last:border-none"
+                      className="w-full text-left px-5 py-3 text-sm hover:bg-primary/10 hover:text-primary transition-all border-b border-foreground/5 last:border-none"
                     >
                       {c}
                     </button>

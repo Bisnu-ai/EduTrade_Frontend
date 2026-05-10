@@ -32,7 +32,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-gray-400 mb-8"
+            className="text-muted mb-8"
           >
             Join our newsletter to receive the best campus offers and community updates.
           </motion.p>
@@ -45,9 +45,9 @@ export default function Home() {
             <input 
               type="email" 
               placeholder="Enter your email" 
-              className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4 flex-grow outline-none focus:border-primary/50 transition-all text-white"
+              className="bg-foreground/5 border border-foreground/10 rounded-2xl px-6 py-4 flex-grow outline-none focus:border-primary/50 transition-all text-foreground"
             />
-            <button className="bg-white text-black px-8 py-4 rounded-2xl font-bold hover:bg-gray-200 transition-colors">
+            <button className="bg-foreground text-background px-8 py-4 rounded-2xl font-bold hover:bg-foreground/80 transition-colors">
               Subscribe
             </button>
           </motion.div>
