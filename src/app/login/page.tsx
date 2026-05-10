@@ -30,15 +30,6 @@ export default function LoginPage() {
       toast.success(data.message || "Welcome back!");
       router.push("/");
     } catch (error: any) {
-      if (error.response?.status === 403 && error.response?.data?.data?.userId) {
-        toast.error("Account not verified. OTP sent to email! 📧");
-        sessionStorage.setItem("pendingVerification", JSON.stringify({
-          userId: error.response.data.data.userId,
-          email: error.response.data.data.email
-        }));
-        router.push("/register/verify");
-        return;
-      }
       toast.error(error.response?.data?.message || "Invalid credentials");
     } finally {
       setLoading(false);
