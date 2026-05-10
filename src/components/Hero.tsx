@@ -1,9 +1,11 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import { ArrowRight, Zap, Shield, Repeat, Users, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { useAuthStore } from "@/store/useAuthStore";
+import api from "@/lib/api";
 
 const FloatingElement = ({ delay = 0, className = "" }) => (
   <motion.div
@@ -21,6 +23,33 @@ const FloatingElement = ({ delay = 0, className = "" }) => (
 
 export default function Hero() {
   const { isAuthenticated } = useAuthStore();
+  const [stats, setStats] = useState({
+    activeStudents: "0+",
+    itemsTraded: "0+",
+    savedByStudents: "₹0+",
+    collegesJoined: "0+"
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const { data } = await api.get("/products/public-stats");
+        if (data.success) {
+          const s = data.data;
+          setStats({
+            activeStudents: `${s.activeStudents}+`,
+            itemsTraded: `${s.itemsTraded < 1000 ? s.itemsTraded : (s.itemsTraded / 1000).toFixed(1) + "k"}+`,
+            savedByStudents: `₹${s.savedByStudents < 1000 ? s.savedByStudents : (s.savedByStudents / 1000).toFixed(1) + "k"}+`,
+            collegesJoined: `${s.collegesJoined}+`
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch real-time stats:", error);
+      }
+    };
+    fetchStats();
+  }, []);
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -39,6 +68,13 @@ export default function Hero() {
       transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } 
     }
   };
+
+  const statItems = [
+    { label: "Active Students", value: stats.activeStudents, icon: Users },
+    { label: "Items Traded", value: stats.itemsTraded, icon: Repeat },
+    { label: "Saved by Students", value: stats.savedByStudents, icon: Zap },
+    { label: "Colleges Joined", value: stats.collegesJoined, icon: Shield },
+  ];
 
   return (
     <section className="relative pt-24 md:pt-40 pb-20 md:pb-32 overflow-hidden">
@@ -111,12 +147,7 @@ export default function Hero() {
             variants={containerVariants}
             className="mt-32 grid grid-cols-2 lg:grid-cols-4 gap-6"
           >
-            {[
-              { label: "Active Students", value: "500+", icon: Users },
-              { label: "Items Traded", value: "1.2k+", icon: Repeat },
-              { label: "Saved by Students", value: "₹50k+", icon: Zap },
-              { label: "Colleges Joined", value: "15+", icon: Shield },
-            ].map((stat, i) => (
+            {statItems.map((stat, i) => (
               <motion.div 
                 key={i} 
                 variants={itemVariants}
