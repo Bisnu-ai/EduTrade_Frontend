@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { Search, ShoppingBag, User as UserIcon, LogOut, Menu, Heart, ShieldAlert, X, Bell, Moon, Sun } from "lucide-react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
@@ -20,6 +21,8 @@ export default function Navbar() {
   const { theme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
 
   // Avoid hydration mismatch by waiting for mount
   useEffect(() => {
@@ -50,6 +53,15 @@ export default function Navbar() {
   const navBorder = !mounted || theme === "dark"
     ? (isScrolled ? "rgba(255, 255, 255, 0.08)" : "rgba(255, 255, 255, 0.02)")
     : (isScrolled ? "rgba(0, 0, 0, 0.08)" : "rgba(0, 0, 0, 0.02)");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   return (
     <>
@@ -85,14 +97,16 @@ export default function Navbar() {
       {/* Right Side Actions */}
       <div className="flex items-center gap-2 md:gap-3">
         {/* Search - Hidden on Mobile */}
-        <div className="hidden sm:flex items-center glass-morphism rounded-full px-4 py-2 w-48 lg:w-64 focus-within:border-primary/50 transition-all">
+        <form onSubmit={handleSearch} className="hidden sm:flex items-center glass-morphism rounded-full px-4 py-2 w-48 lg:w-64 focus-within:border-primary/50 transition-all">
           <Search size={18} className="text-muted" />
           <input 
             type="text" 
             placeholder="Search..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="bg-transparent border-none outline-none text-sm ml-3 w-full text-foreground"
           />
-        </div>
+        </form>
 
         {/* Action Icons - Desktop Only */}
         <div className="hidden md:flex items-center gap-2">
