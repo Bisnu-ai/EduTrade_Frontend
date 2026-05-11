@@ -78,7 +78,7 @@ export default function AboutPage() {
             {[
               { name: "Bisnu Prasad Samantray", role: "Backend Developer" },
               { name: "Manish Prasad", role: "Frontend Developer" },
-              { name: "Piyush Pattanayak", role: "Database Role" },
+              { name: "Piyush Pattanayak", role: "Database Engineer" },
               { name: "Smarak Jitendriya", role: "Frontend Developer" },
               { name: "Debasis Kandi", role: "Testing & Monitoring" },
             ].map((member, index) => (
