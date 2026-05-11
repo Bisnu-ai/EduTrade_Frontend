@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Heart, Users, Target, Rocket, Linkedin } from "lucide-react";
+import { Heart, Users, Target, Rocket, ExternalLink } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -100,7 +100,7 @@ export default function AboutPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
                 >
-                  <Linkedin size={14} />
+                  <ExternalLink size={14} />
                 </a>
               </motion.div>
             ))}
