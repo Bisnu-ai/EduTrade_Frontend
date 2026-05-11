@@ -31,6 +31,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
 
     const initMeeting = async () => {
       try {
+        console.log("Initializing call with RoomID:", roomId);
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
           appID,
           serverSecret,
@@ -40,32 +41,27 @@ const VideoCall: React.FC<VideoCallProps> = ({
         );
 
         const zp = ZegoUIKitPrebuilt.create(kitToken);
+        console.log("ZegoUIKit instance created");
 
         zp.joinRoom({
           container: containerRef.current,
+          scenario: {
+            mode: ZegoUIKitPrebuilt.OneONoneCall,
+          },
           turnOnMicrophoneWhenJoining: true,
           turnOnCameraWhenJoining: !isAudioOnly,
-          showMyCameraToggleButton: !isAudioOnly,
+          showMyCameraToggleButton: true,
           showMyMicrophoneToggleButton: true,
           showAudioVideoSettingsButton: true,
           showScreenSharingButton: true,
-          showTextChat: true,
-          showUserList: true,
           maxUsers: 2,
-          layout: "Auto",
-          showLayoutButton: false,
-          scenario: {
-            mode: ZegoUIKitPrebuilt.OneONoneCall,
-            config: {
-              role: ZegoUIKitPrebuilt.Host,
-            },
-          },
           onLeaveRoom: () => {
             if (onLeave) onLeave();
           },
         });
+        console.log("Joined room successfully");
       } catch (err: any) {
-        console.error("ZegoCloud initialization error:", err);
+        console.error("ZegoCloud error details:", err);
         // Inform user about common issues
         if (err.message?.includes("NotReadableError") || err.extendedData?.includes("NotReadableError")) {
           alert("Camera/Microphone is already in use by another app. Please close other apps and try again.");
