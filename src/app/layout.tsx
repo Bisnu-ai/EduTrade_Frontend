@@ -34,6 +34,7 @@ import { AuthProvider } from "@/components/AuthProvider";
 import { CallProvider } from "@/components/CallProvider";
 import ChatBot from "@/components/ChatBot";
 import GoogleAuthProvider from "@/components/GoogleAuthProvider";
+import Script from "next/script";
 
 export default function RootLayout({
   children,
@@ -43,6 +44,19 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} bg-background text-foreground antialiased transition-colors duration-300`}>
+        <Script
+          id="register-sw"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js');
+                });
+              }
+            `,
+          }}
+        />
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="dark"
