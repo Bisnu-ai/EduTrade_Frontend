@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
 import { motion, Variants } from "framer-motion";
-import { Heart, MapPin, Tag, ArrowUpRight, Edit, Trash2 } from "lucide-react";
+import { Heart, MapPin, Tag, ArrowUpRight, Edit, Trash2, ShieldCheck, Zap } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
@@ -141,6 +141,27 @@ export default function FeaturedProducts({
                 sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
               />
+
+              {/* Status Badges */}
+              <div className="absolute top-2 md:top-4 left-2 md:left-4 flex flex-col gap-2 z-20">
+                {/* NEW Badge if listed in last 24h */}
+                {new Date().getTime() - new Date(product.createdAt).getTime() < 24 * 60 * 60 * 1000 && (
+                  <motion.span 
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="flex items-center gap-1 px-2 py-0.5 md:px-3 md:py-1 rounded-full bg-orange-500 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider shadow-lg shadow-orange-500/40"
+                  >
+                    <Zap size={10} className="fill-current" /> NEW
+                  </motion.span>
+                )}
+                
+                {/* Trusted Seller Badge */}
+                {product.seller?.trustScore && product.seller.trustScore >= 90 && (
+                  <span className="flex items-center gap-1 px-2 py-0.5 md:px-3 md:py-1 rounded-full bg-green-500 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider shadow-lg shadow-green-500/40">
+                    <ShieldCheck size={10} /> Trusted
+                  </span>
+                )}
+              </div>
               
               {/* Overlay Actions */}
               <div className="absolute top-2 md:top-4 right-2 md:right-4 flex flex-col gap-2 z-20">
@@ -185,14 +206,10 @@ export default function FeaturedProducts({
                   <div className="flex-1 min-w-0 flex flex-col">
                     <div className="flex items-center gap-1">
                       <p className="text-[10px] md:text-xs font-bold truncate text-foreground/90">{product.seller?.name || "User"}</p>
-                      {product.seller?.badges && product.seller.badges.length > 0 && (
-                        <div className="flex gap-0.5">
-                          {product.seller.badges.slice(0, 1).map((badge, idx) => (
-                            <span key={idx} className="text-[6px] md:text-[8px] bg-yellow-500/20 text-yellow-600 px-1 rounded-sm font-bold uppercase">
-                              {badge}
-                            </span>
-                          ))}
-                        </div>
+                      {product.seller?.trustScore && (
+                        <span className="text-[8px] md:text-[9px] text-green-500 font-bold">
+                          {product.seller.trustScore}%
+                        </span>
                       )}
                     </div>
                     <span className="text-[8px] md:text-[9px] text-muted">{formatDate(product.createdAt)}</span>
