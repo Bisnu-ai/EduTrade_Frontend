@@ -45,8 +45,8 @@ const VideoCall: React.FC<VideoCallProps> = ({
           container: containerRef.current,
           scenario: {
             mode: isAudioOnly 
-              ? ZegoUIKitPrebuilt.OneONOneCall 
-              : ZegoUIKitPrebuilt.OneONOneCall, // UI Kit handles both
+              ? ZegoUIKitPrebuilt.OneONoneCall 
+              : ZegoUIKitPrebuilt.OneONoneCall, // UI Kit handles both
           },
           showScreenSharingButton: false,
           turnOnCameraWhenJoining: !isAudioOnly,
