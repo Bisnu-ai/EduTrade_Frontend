@@ -64,6 +64,7 @@ export default function AdminPage() {
   const [users, setUsers] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState(false);
   const [confirm, setConfirm] = useState<{ msg: string; fn: () => void; text?: string; danger?: boolean } | null>(null);
 
@@ -89,7 +90,7 @@ export default function AdminPage() {
         setUsers(u.data.data.users);
       }
       if (tab === "products") {
-        const p = await api.get(`/admin/products?search=${search}`);
+        const p = await api.get(`/admin/products?search=${search}&filter=${filter}`);
         setProducts(p.data.data.products);
       }
     } catch (e: any) {
@@ -97,9 +98,9 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
-  }, [tab, search]);
+  }, [tab, search, filter]);
 
-  useEffect(() => { load(); }, [tab]);
+  useEffect(() => { load(); }, [tab, filter]);
 
   const ask = (msg: string, fn: () => void, text = "Confirm", danger = false) => setConfirm({ msg, fn, text, danger });
 
@@ -125,6 +126,14 @@ export default function AdminPage() {
       toast.success("Product removed");
       load();
     } catch { toast.error("Failed"); }
+  };
+
+  const handleDeleteOldProducts = async () => {
+    try {
+      const res = await api.delete("/admin/products/old");
+      toast.success(res.data.message);
+      load();
+    } catch { toast.error("Failed to delete old products"); }
   };
 
   const handleMakeAdmin = async (id: string, name: string) => {
@@ -291,7 +300,7 @@ export default function AdminPage() {
       {/* ── Products Tab ── */}
       {tab === "products" && (
         <div>
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
             <div className="flex items-center gap-2 glass-morphism px-4 py-2.5 rounded-xl flex-1 max-w-sm">
               <Search size={16} className="text-gray-500" />
               <input
@@ -301,6 +310,27 @@ export default function AdminPage() {
                 placeholder="Search listings…"
                 className="bg-transparent outline-none text-sm flex-1"
               />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setFilter(filter === "old" ? "" : "old")}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                  filter === "old" 
+                    ? "bg-orange-500/10 text-orange-500 border-orange-500/20" 
+                    : "glass-morphism text-gray-400 border-white/5"
+                }`}
+              >
+                {filter === "old" ? "Showing Old (30d+)" : "Filter: Old (30d+)"}
+              </button>
+              {products.length > 0 && filter === "old" && (
+                <button
+                  onClick={() => ask("Delete ALL products older than 30 days? This action cannot be undone.", handleDeleteOldProducts, "Delete All Old", true)}
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-red-500 text-white hover:bg-red-600 transition-all shadow-lg shadow-red-500/20"
+                >
+                  Delete All Old
+                </button>
+              )}
             </div>
           </div>
 
