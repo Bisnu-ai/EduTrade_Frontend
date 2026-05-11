@@ -64,8 +64,15 @@ const VideoCall: React.FC<VideoCallProps> = ({
             if (onLeave) onLeave();
           },
         });
-      } catch (err) {
+      } catch (err: any) {
         console.error("ZegoCloud initialization error:", err);
+        // Inform user about common issues
+        if (err.message?.includes("NotReadableError") || err.extendedData?.includes("NotReadableError")) {
+          alert("Camera/Microphone is already in use by another app. Please close other apps and try again.");
+        } else {
+          alert("Failed to start call. Please check your camera/mic permissions.");
+        }
+        if (onLeave) onLeave();
       }
     };
 
