@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthProvider";
+import { CallProvider } from "@/components/CallProvider";
 import ChatBot from "@/components/ChatBot";
 import GoogleAuthProvider from "@/components/GoogleAuthProvider";
 
@@ -36,6 +37,7 @@ export default function RootLayout({
         >
           <GoogleAuthProvider>
           <AuthProvider>
+          <CallProvider>
             <Navbar />
             <main>{children}</main>
             <ChatBot />
@@ -48,6 +50,7 @@ export default function RootLayout({
                 backdropFilter: 'blur(10px)',
               },
             }} />
+          </CallProvider>
           </AuthProvider>
           </GoogleAuthProvider>
         </ThemeProvider>
