@@ -61,29 +61,25 @@ function ChatContent() {
 
   /* ── Socket ── */
   useEffect(() => {
-    if (!user?._id) return;
+    if (!user?._id || socketRef.current) return;
+    
     const socketUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '');
     const s = io(socketUrl, { transports: ["websocket"], reconnection: true });
     socketRef.current = s;
-    s.on("connect",        () => s.emit("join", user._id));
+    
+    s.on("connect", () => {
+      console.log("Socket connected, joining room:", user._id);
+      s.emit("join", user._id);
+    });
+
     s.on("receiveMessage", (m) => setMessages((p) => [...p, m]));
-    s.on("showRating", () => {
-      setShowRatingModal(true);
-    });
-
-    s.on("incomingCall", (data) => {
-      setIncomingCall(data);
-    });
-
-    s.on("callAccepted", (data) => {
-      setActiveCall({ roomId: data.roomId, type: data.type });
-    });
-
+    s.on("showRating", () => setShowRatingModal(true));
+    s.on("incomingCall", (data) => setIncomingCall(data));
+    s.on("callAccepted", (data) => setActiveCall({ roomId: data.roomId, type: data.type }));
     s.on("callRejected", () => {
       toast.error("Call rejected");
       setActiveCall(null);
     });
-
     s.on("callEnded", () => {
       setActiveCall(null);
       setIncomingCall(null);
@@ -91,8 +87,9 @@ function ChatContent() {
 
     return () => {
       s.disconnect();
+      socketRef.current = null;
     };
-  }, [recipientId, productId, user?._id]);
+  }, [user?._id]);
 
   const handleRating = async (val: number) => {
     try {
