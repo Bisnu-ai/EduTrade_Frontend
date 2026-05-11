@@ -114,10 +114,10 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({ children
       <AnimatePresence>
         {incomingCall && (
           <motion.div
-            initial={{ x: 300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: 300, opacity: 0 }}
-            className="fixed top-20 right-4 z-[200] w-72 glass-morphism p-4 rounded-2xl border border-primary/20 shadow-2xl flex items-center gap-4"
+            initial={{ y: -50, opacity: 0, scale: 0.9 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: -50, opacity: 0, scale: 0.9 }}
+            className="fixed top-20 left-4 right-4 md:left-auto md:right-6 z-[200] md:w-80 glass-morphism p-4 rounded-[1.5rem] border border-primary/20 shadow-2xl flex items-center gap-4"
           >
             <div className="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center animate-pulse">
               {incomingCall.type === 'video' ? <Video size={24} /> : <Phone size={24} />}
