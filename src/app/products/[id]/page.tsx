@@ -20,6 +20,7 @@ import {
 import { useAuthStore } from "@/store/useAuthStore";
 import { formatDate } from "@/lib/utils";
 import toast from "react-hot-toast";
+import confetti from "canvas-confetti";
 
 const ArrowUpRight = ({ size }: { size: number }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
@@ -71,6 +72,14 @@ export default function ProductDetailPage() {
     try {
       const { data } = await api.post(`/products/${product._id}/wishlist`);
       setIsWishlisted(data.data.isWishlisted);
+      if (data.data.isWishlisted) {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#00ff00', '#0000ff', '#ff0000']
+        });
+      }
       toast.success(data.message);
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to update wishlist");

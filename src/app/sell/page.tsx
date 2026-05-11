@@ -7,6 +7,7 @@ import api from "@/lib/api";
 import { motion } from "framer-motion";
 import { Upload, X, Tag, DollarSign, List, Info, Loader2, Plus, Heart, FileText } from "lucide-react";
 import toast from "react-hot-toast";
+import confetti from "canvas-confetti";
 
 const CATEGORIES = ["Textbooks", "Electronics", "Dorm Essentials", "Stationery", "Fashion", "Bicycles", "Others"];
 const CONDITIONS = ["New", "Gently Used", "Fair", "Heavily Used"];
@@ -102,8 +103,14 @@ function SellForm() {
       await api.post("/products", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.6 },
+        colors: ['#00ffff', '#00ff00', '#ff00ff']
+      });
       toast.success("Item listed successfully!");
-      router.push("/products");
+      setTimeout(() => router.push("/products"), 1500);
     } catch (error: any) {
       const serverErrors = error.response?.data?.errors;
       if (Array.isArray(serverErrors)) {
