@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Heart, Users, Target, Rocket } from "lucide-react";
+import { Heart, Users, Target, Rocket, Linkedin } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -68,6 +68,7 @@ export default function AboutPage() {
              </div>
            </div>
         </div>
+
         <div className="mt-32">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Meet the Team</h2>
@@ -76,26 +77,36 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {[
-              { name: "Bisnu Prasad Samantray", role: "Backend Developer" },
-              { name: "Manish Prasad", role: "Frontend Developer" },
-              { name: "Piyush Pattanayak", role: "Database Engineer" },
-              { name: "Smarak Jitendriya", role: "Frontend Developer" },
-              { name: "Debasis Kandi", role: "Testing & Monitoring" },
+              { name: "Bisnu Prasad Samantray", role: "Backend Developer", link: "https://www.linkedin.com/in/bisnu-ai" },
+              { name: "Manish Prasad", role: "Frontend Developer", link: "https://www.linkedin.com/in/manish-prasad-5a0701315" },
+              { name: "Piyush Pattanayak", role: "Database Engineer", link: "https://www.linkedin.com/in/piyush-pattanayak-9a8248253" },
+              { name: "Smarak Jitendriya", role: "Frontend Developer", link: "https://www.linkedin.com/in/smarak-jitendriya" },
+              { name: "Debasis Kandi", role: "Testing & Monitoring", link: "https://www.linkedin.com/in/debasis-kandi-37216632b" },
             ].map((member, index) => (
               <motion.div
                 key={index}
                 whileHover={{ y: -10 }}
-                className="glass-morphism p-6 rounded-[32px] text-center border border-white/5 hover:border-primary/30 transition-all group"
+                className="glass-morphism p-6 rounded-[32px] text-center border border-white/5 hover:border-primary/30 transition-all group relative"
               >
                 <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary font-black text-xl mx-auto mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                   {member.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <h3 className="font-bold text-sm mb-1 leading-tight">{member.name}</h3>
-                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{member.role}</p>
+                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-4">{member.role}</p>
+                
+                <a 
+                  href={member.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
+                >
+                  <Linkedin size={14} />
+                </a>
               </motion.div>
             ))}
           </div>
         </div>
+>
       </div>
     </div>
   );
