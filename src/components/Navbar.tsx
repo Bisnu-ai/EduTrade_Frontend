@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
-import { Search, ShoppingBag, User as UserIcon, LogOut, Menu, Heart, ShieldAlert, X, Bell, Moon, Sun } from "lucide-react";
+import { Search, ShoppingBag, User as UserIcon, LogOut, Menu, Heart, ShieldAlert, X, Bell, Moon, Sun, BarChart2 } from "lucide-react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
 import { NotificationBell } from "./NotificationBell";
@@ -160,6 +160,9 @@ export default function Navbar() {
                         </Link>
                         <Link href="/my-listings" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary rounded-xl transition-all text-foreground">
                           <ShoppingBag size={16} /> My Listings
+                        </Link>
+                        <Link href="/dashboard" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary rounded-xl transition-all text-foreground">
+                          <BarChart2 size={16} /> Dashboard
                         </Link>
                         <Link href="/wishlist" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary rounded-xl transition-all text-foreground">
                           <Heart size={16} /> Wishlist
