@@ -51,6 +51,8 @@ function ChatContent() {
   const [showMap, setShowMap] = useState(false);
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [userRating, setUserRating] = useState(0);
+  const [isRecipientTyping, setIsRecipientTyping] = useState(false);
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const { initiateCall } = useCall();
 
@@ -73,6 +75,12 @@ function ChatContent() {
 
     s.on("receiveMessage", (m) => setMessages((p) => [...p, m]));
     s.on("showRating", () => setShowRatingModal(true));
+    s.on("userTyping", ({ senderId, productId: pId }) => {
+      if (senderId === recipientId && pId === productId) {
+        setIsRecipientTyping(true);
+        setTimeout(() => setIsRecipientTyping(false), 3000);
+      }
+    });
 
     return () => {
       s.disconnect();
@@ -141,6 +149,19 @@ function ChatContent() {
     } finally {
       setSending(false);
       inputRef.current?.focus();
+    }
+  };
+
+  const handleTyping = (val: string) => {
+    setNewMsg(val);
+    
+    // Emit typing event to socket
+    if (socketRef.current && user?._id && recipientId && productId) {
+      socketRef.current.emit("typing", { 
+        recipientId, 
+        senderId: user._id, 
+        productId 
+      });
     }
   };
 
@@ -461,6 +482,24 @@ function ChatContent() {
                 </div>
               );
             })}
+
+            {isRecipientTyping && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 px-2"
+              >
+                <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
+                  {recipient?.avatar ? <img src={recipient.avatar} className="w-full h-full object-cover" /> : recipient?.name?.charAt(0)}
+                </div>
+                <div className="flex gap-1 items-center bg-white/5 px-3 py-2 rounded-2xl">
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]" />
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]" />
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" />
+                </div>
+              </motion.div>
+            )}
+
             <div ref={scrollRef} />
           </>
         )}
@@ -475,7 +514,7 @@ function ChatContent() {
           <input
             ref={inputRef}
             value={newMsg}
-            onChange={(e) => setNewMsg(e.target.value)}
+            onChange={(e) => handleTyping(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) handleSend(e); }}
             placeholder="Type a message…"
             className="flex-1 bg-transparent outline-none text-sm min-w-0 placeholder-gray-500"
