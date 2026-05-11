@@ -9,9 +9,23 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "CampusKart | Secure Campus Marketplace 🎓",
   description: "The official marketplace for college students. Buy, sell, and trade textbooks, electronics, and dorm essentials with verified students in your campus.",
+  manifest: "/manifest.json",
+  themeColor: "#6366f1",
   icons: {
     icon: "/favicon.ico?v=2",
-  }
+    apple: "/logo.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "CampusKart",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
 };
 
 import Footer from "@/components/Footer";
