@@ -43,16 +43,23 @@ const VideoCall: React.FC<VideoCallProps> = ({
 
         zp.joinRoom({
           container: containerRef.current,
-          scenario: {
-            mode: isAudioOnly 
-              ? ZegoUIKitPrebuilt.OneONoneCall 
-              : ZegoUIKitPrebuilt.OneONoneCall, // UI Kit handles both
-          },
-          showScreenSharingButton: false,
-          turnOnCameraWhenJoining: !isAudioOnly,
           turnOnMicrophoneWhenJoining: true,
+          turnOnCameraWhenJoining: !isAudioOnly,
           showMyCameraToggleButton: !isAudioOnly,
+          showMyMicrophoneToggleButton: true,
           showAudioVideoSettingsButton: true,
+          showScreenSharingButton: true,
+          showTextChat: true,
+          showUserList: true,
+          maxUsers: 2,
+          layout: "Auto",
+          showLayoutButton: false,
+          scenario: {
+            mode: ZegoUIKitPrebuilt.OneONoneCall,
+            config: {
+              role: ZegoUIKitPrebuilt.Host,
+            },
+          },
           onLeaveRoom: () => {
             if (onLeave) onLeave();
           },
