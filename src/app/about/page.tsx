@@ -68,6 +68,34 @@ export default function AboutPage() {
              </div>
            </div>
         </div>
+        <div className="mt-32">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Meet the Team</h2>
+            <p className="text-gray-400">The passionate minds behind CampusKart.</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            {[
+              { name: "Bisnu Prasad Samantray", role: "Backend Developer" },
+              { name: "Manish Prasad", role: "Frontend Developer" },
+              { name: "Piyush Pattanayak", role: "Database Role" },
+              { name: "Smarak Jitendriya", role: "Frontend Developer" },
+              { name: "Debasis Kandi", role: "Testing & Monitoring" },
+            ].map((member, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -10 }}
+                className="glass-morphism p-6 rounded-[32px] text-center border border-white/5 hover:border-primary/30 transition-all group"
+              >
+                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary font-black text-xl mx-auto mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                  {member.name.split(' ').map(n => n[0]).join('')}
+                </div>
+                <h3 className="font-bold text-sm mb-1 leading-tight">{member.name}</h3>
+                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{member.role}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
