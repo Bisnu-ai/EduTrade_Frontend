@@ -21,6 +21,7 @@ const MeetupMap = nextDynamic(() => import("@/components/MeetupMap"), {
   ssr: false,
   loading: () => <div className="h-64 w-full bg-secondary animate-pulse rounded-2xl" />
 });
+const VideoCall = nextDynamic(() => import("@/components/VideoCall"), { ssr: false });
 
 function timeAgo(dateStr: string) {
   const d = new Date(dateStr);
@@ -50,6 +51,10 @@ function ChatContent() {
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [userRating, setUserRating] = useState(0);
 
+  // Calling states
+  const [activeCall, setActiveCall] = useState<{ roomId: string; type: 'video' | 'audio' } | null>(null);
+  const [incomingCall, setIncomingCall] = useState<{ callerId: string; callerName: string; roomId: string; type: 'video' | 'audio' } | null>(null);
+
   const socketRef  = useRef<Socket | null>(null);
   const scrollRef  = useRef<HTMLDivElement>(null);
   const inputRef   = useRef<HTMLInputElement>(null);
@@ -64,6 +69,24 @@ function ChatContent() {
     s.on("receiveMessage", (m) => setMessages((p) => [...p, m]));
     s.on("showRating", () => {
       setShowRatingModal(true);
+    });
+
+    s.on("incomingCall", (data) => {
+      setIncomingCall(data);
+    });
+
+    s.on("callAccepted", (data) => {
+      setActiveCall({ roomId: data.roomId, type: data.type });
+    });
+
+    s.on("callRejected", () => {
+      toast.error("Call rejected");
+      setActiveCall(null);
+    });
+
+    s.on("callEnded", () => {
+      setActiveCall(null);
+      setIncomingCall(null);
     });
 
     return () => {
@@ -267,6 +290,41 @@ function ChatContent() {
     }
   };
 
+  const initiateCall = (type: 'video' | 'audio') => {
+    if (!recipientId || !user?._id) return;
+    const roomId = [user._id, recipientId].sort().join("-") + "-" + productId;
+    const callData = {
+      callerId: user._id,
+      callerName: user.name,
+      recipientId,
+      type,
+      roomId
+    };
+    socketRef.current?.emit("startCall", callData);
+    setActiveCall({ roomId, type });
+    toast.success(`Calling ${recipient?.name || 'user'}...`);
+  };
+
+  const acceptIncomingCall = () => {
+    if (!incomingCall) return;
+    socketRef.current?.emit("acceptCall", { callerId: incomingCall.callerId, roomId: incomingCall.roomId, type: incomingCall.type });
+    setActiveCall({ roomId: incomingCall.roomId, type: incomingCall.type });
+    setIncomingCall(null);
+  };
+
+  const rejectIncomingCall = () => {
+    if (!incomingCall) return;
+    socketRef.current?.emit("rejectCall", { callerId: incomingCall.callerId });
+    setIncomingCall(null);
+  };
+
+  const endActiveCall = () => {
+    if (activeCall) {
+      socketRef.current?.emit("endCall", { recipientId });
+      setActiveCall(null);
+    }
+  };
+
   /* ── Empty state ── */
   if (!recipientId || !productId)
     return (
@@ -358,8 +416,18 @@ function ChatContent() {
             )}
           </AnimatePresence>
 
-          <button className="p-2 rounded-xl hover:bg-white/5 text-gray-400 hover:text-primary transition-all"><Phone size={18} /></button>
-          <button className="p-2 rounded-xl hover:bg-white/5 text-gray-400 hover:text-primary transition-all"><Video size={18} /></button>
+          <button 
+            onClick={() => initiateCall('audio')}
+            className="p-2 rounded-xl hover:bg-white/5 text-gray-400 hover:text-primary transition-all"
+          >
+            <Phone size={18} />
+          </button>
+          <button 
+            onClick={() => initiateCall('video')}
+            className="p-2 rounded-xl hover:bg-white/5 text-gray-400 hover:text-primary transition-all"
+          >
+            <Video size={18} />
+          </button>
           <button className="p-2 rounded-xl hover:bg-white/5 text-gray-400 transition-all"><MoreVertical size={18} /></button>
         </div>
       </div>
@@ -524,6 +592,54 @@ function ChatContent() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* Incoming Call Popup */}
+      <AnimatePresence>
+        {incomingCall && (
+          <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm">
+            <motion.div 
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 50, opacity: 0 }}
+              className="glass-morphism p-8 rounded-[2.5rem] max-w-sm w-full text-center border border-white/10 shadow-2xl"
+            >
+              <div className="w-20 h-20 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+                {incomingCall.type === 'video' ? <Video size={40} /> : <Phone size={40} />}
+              </div>
+              <h2 className="text-xl font-bold mb-1">Incoming {incomingCall.type} Call</h2>
+              <p className="text-gray-400 text-sm mb-8">{incomingCall.callerName} is calling you...</p>
+              
+              <div className="flex gap-4">
+                <button
+                  onClick={rejectIncomingCall}
+                  className="flex-1 py-4 bg-red-500 text-white rounded-2xl font-bold hover:bg-red-600 transition-all"
+                >
+                  Reject
+                </button>
+                <button
+                  onClick={acceptIncomingCall}
+                  className="flex-1 py-4 bg-green-500 text-white rounded-2xl font-bold hover:bg-green-600 transition-all"
+                >
+                  Accept
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Active Call Fullscreen */}
+      {activeCall && (
+        <div className="fixed inset-0 z-[120] bg-black">
+          <VideoCall 
+            roomId={activeCall.roomId}
+            userId={user?._id || ""}
+            userName={user?.name || "User"}
+            isAudioOnly={activeCall.type === 'audio'}
+            onLeave={endActiveCall}
+          />
+        </div>
+      )}
     </div>
   );
 }
