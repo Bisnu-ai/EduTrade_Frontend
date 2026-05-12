@@ -121,8 +121,8 @@ export default function AboutPage() {
                 whileHover={{ y: -10 }}
                 className="glass-morphism p-6 rounded-[32px] text-center border border-white/5 hover:border-primary/30 transition-all group relative"
               >
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary font-black text-xl mx-auto mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                  {member.name.split(' ').map(n => n[0]).join('')}
+                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mx-auto mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-500 overflow-hidden relative">
+                  <User size={40} strokeWidth={1.5} className="translate-y-2" />
                 </div>
                 <h3 className="font-bold text-sm mb-1 leading-tight">{member.name}</h3>
                 <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-4">{member.role}</p>
