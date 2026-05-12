@@ -90,8 +90,8 @@ export default function Navbar() {
       {/* Desktop Navigation */}
       <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-muted">
         <Link href="/products" className="hover:text-foreground transition-colors">Marketplace</Link>
-        <Link href="/how-it-works" className="hover:text-foreground transition-colors">How it works</Link>
-        <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
+        <Link href="/how-it-works" prefetch={false} className="hover:text-foreground transition-colors">How it works</Link>
+        <Link href="/about" prefetch={false} className="hover:text-foreground transition-colors">About</Link>
       </div>
 
       {/* Right Side Actions */}
@@ -189,8 +189,8 @@ export default function Navbar() {
           </div>
         ) : (
           <div className="hidden md:flex items-center gap-2">
-            <Link href="/login" className="px-4 py-2 text-sm font-medium hover:text-foreground/80 transition-colors">Login</Link>
-            <Link href="/register">
+            <Link href="/login" prefetch={false} className="px-4 py-2 text-sm font-medium hover:text-foreground/80 transition-colors">Login</Link>
+            <Link href="/register" prefetch={false}>
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

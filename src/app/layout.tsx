@@ -32,9 +32,12 @@ import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CallProvider } from "@/components/CallProvider";
-import ChatBot from "@/components/ChatBot";
 import GoogleAuthProvider from "@/components/GoogleAuthProvider";
 import Script from "next/script";
+import dynamic from "next/dynamic";
+
+// Optimize: Lazy load heavy components
+const ChatBot = dynamic(() => import("@/components/ChatBot"), { ssr: false });
 
 export default function RootLayout({
   children,

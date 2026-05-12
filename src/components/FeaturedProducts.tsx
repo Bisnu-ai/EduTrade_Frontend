@@ -130,16 +130,17 @@ export default function FeaturedProducts({
                 transition: { duration: 0.5, ease: [0.215, 0.61, 0.355, 1] } 
               }
             }}
-            whileHover={{ y: -8, scale: 1.02 }}
-            className="glass-morphism rounded-2xl md:rounded-3xl overflow-hidden group relative transition-shadow hover:shadow-2xl hover:shadow-primary/20"
+            whileHover={{ y: -5 }}
+            className="glass-morphism rounded-2xl md:rounded-3xl overflow-hidden group relative transition-shadow hover:shadow-xl hover:shadow-primary/10"
           >
             <div className="h-40 md:h-64 overflow-hidden relative">
               <Image 
                 src={product.images?.[0] ? (product.images[0].startsWith('http') ? product.images[0] : `${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('/api', '')}${product.images[0]}`) : 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop'} 
                 alt={product.title} 
                 fill
-                sizes="(max-width: 768px) 50vw, 25vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                priority={products.indexOf(product) < 4 && !manualProducts}
               />
 
               {/* Status Badges */}
