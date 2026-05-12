@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Heart, Users, Target, Rocket, ExternalLink } from "lucide-react";
+import { Heart, Users, Target, Rocket, ExternalLink, User } from "lucide-react";
 import api from "@/lib/api";
 
 export default function AboutPage() {
