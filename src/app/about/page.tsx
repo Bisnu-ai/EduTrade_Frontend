@@ -1,9 +1,42 @@
 "use client";
-
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart, Users, Target, Rocket, ExternalLink } from "lucide-react";
+import api from "@/lib/api";
 
 export default function AboutPage() {
+  const [stats, setStats] = useState({
+    activeStudents: 0,
+    itemsTraded: 0,
+    savedByStudents: 0,
+    collegesJoined: 0
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const { data } = await api.get("/products/public-stats");
+        if (data.success) {
+          setStats(data.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch stats:", error);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  const formatNumber = (num: number) => {
+    if (num >= 1000) return (num / 1000).toFixed(1) + "k+";
+    return num.toString();
+  };
+
+  const formatCurrency = (num: number) => {
+    if (num >= 100000) return "₹" + (num / 100000).toFixed(1) + "L+";
+    if (num >= 1000) return "₹" + (num / 1000).toFixed(1) + "k+";
+    return "₹" + num.toString();
+  };
+
   return (
     <div className="min-h-screen pt-32 pb-20 px-6">
       <div className="max-w-5xl mx-auto">
@@ -51,19 +84,19 @@ export default function AboutPage() {
            <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/20 rounded-full blur-[100px]" />
            <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
              <div>
-               <div className="text-4xl font-black text-primary mb-2">5k+</div>
+               <div className="text-4xl font-black text-primary mb-2">{formatNumber(stats.activeStudents)}</div>
                <div className="text-xs text-gray-500 font-bold uppercase tracking-widest">Active Students</div>
              </div>
              <div>
-               <div className="text-4xl font-black text-primary mb-2">12k+</div>
+               <div className="text-4xl font-black text-primary mb-2">{formatNumber(stats.itemsTraded)}</div>
                <div className="text-xs text-gray-500 font-bold uppercase tracking-widest">Items Traded</div>
              </div>
              <div>
-               <div className="text-4xl font-black text-primary mb-2">₹20L+</div>
+               <div className="text-4xl font-black text-primary mb-2">{formatCurrency(stats.savedByStudents)}</div>
                <div className="text-xs text-gray-500 font-bold uppercase tracking-widest">Saved by Students</div>
              </div>
              <div>
-               <div className="text-4xl font-black text-primary mb-2">50+</div>
+               <div className="text-4xl font-black text-primary mb-2">{stats.collegesJoined}+</div>
                <div className="text-xs text-gray-500 font-bold uppercase tracking-widest">Colleges Joined</div>
              </div>
            </div>
