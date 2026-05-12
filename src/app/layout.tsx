@@ -34,10 +34,7 @@ import { AuthProvider } from "@/components/AuthProvider";
 import { CallProvider } from "@/components/CallProvider";
 import GoogleAuthProvider from "@/components/GoogleAuthProvider";
 import Script from "next/script";
-import dynamic from "next/dynamic";
-
-// Optimize: Lazy load heavy components
-const ChatBot = dynamic(() => import("@/components/ChatBot"), { ssr: false });
+import OptimizedChatBot from "@/components/OptimizedChatBot";
 
 export default function RootLayout({
   children,
@@ -71,7 +68,7 @@ export default function RootLayout({
           <CallProvider>
             <Navbar />
             <main>{children}</main>
-            <ChatBot />
+            <OptimizedChatBot />
             <Footer />
             <Toaster position="bottom-right" toastOptions={{
               style: {
