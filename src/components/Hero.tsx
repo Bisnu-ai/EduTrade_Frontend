@@ -11,11 +11,11 @@ const FloatingElement = ({ delay = 0, className = "" }) => (
   <motion.div
     initial={{ y: 0 }}
     animate={{ y: [0, -20, 0] }}
-    transition={{ 
-      duration: 6, 
-      repeat: Infinity, 
+    transition={{
+      duration: 6,
+      repeat: Infinity,
       ease: "easeInOut",
-      delay 
+      delay
     }}
     className={`absolute rounded-full filter blur-[60px] opacity-20 pointer-events-none ${className}`}
   />
@@ -62,10 +62,10 @@ export default function Hero() {
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } 
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
@@ -80,17 +80,17 @@ export default function Hero() {
     <section className="relative min-h-[90vh] flex items-center pt-24 md:pt-32 pb-20 md:pb-32 overflow-hidden">
       {/* Premium Background Elements */}
       <div className="absolute inset-0 z-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000"
-          style={{ 
-            backgroundImage: "url('/campus-hero-bg.png')",
+        <div
+          className="absolute inset-0 bg-cover object-contain bg-center bg-no-repeat transition-transform duration-1000"
+          style={{
+            backgroundImage: "url('/bg.png')",
             transform: "scale(1.05)"
           }}
         />
         {/* Sophisticated Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background z-0" />
         <div className="absolute inset-0 backdrop-blur-[2px] z-0" />
-        
+
         {/* Floating Accents */}
         <FloatingElement delay={0} className="w-96 h-96 bg-primary/30 -top-20 -left-20" />
         <FloatingElement delay={2} className="w-80 h-80 bg-blue-500/20 bottom-0 -right-20" />
@@ -126,7 +126,7 @@ export default function Hero() {
                 whileTap={{ scale: 0.98 }}
                 className="group bg-primary text-white px-10 py-5 rounded-2xl font-bold flex items-center gap-3 shadow-2xl shadow-primary/40 transition-all text-lg"
               >
-                Browse Deals 
+                Browse Deals
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </motion.button>
             </Link>
@@ -159,8 +159,8 @@ export default function Hero() {
             className="mt-32 grid grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {statItems.map((stat, i) => (
-              <motion.div 
-                key={i} 
+              <motion.div
+                key={i}
                 variants={itemVariants}
                 whileHover={{ y: -5, backgroundColor: "rgba(255,255,255,0.05)" }}
                 className="glass-morphism p-8 rounded-[32px] group text-left border border-foreground/5 transition-colors"
