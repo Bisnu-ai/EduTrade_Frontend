@@ -186,7 +186,7 @@ export default function FeaturedProducts({
                 )}
               </div>
 
-                <span className="px-2 py-0.5 md:px-3 md:py-1 rounded-full bg-primary/80 backdrop-blur-md text-[8px] md:text-[10px] font-bold uppercase tracking-wider">
+                <span className="absolute bottom-2 md:bottom-4 right-2 md:right-4 px-2 py-0.5 md:px-3 md:py-1 rounded-full bg-primary/80 backdrop-blur-md text-[8px] md:text-[10px] font-bold uppercase tracking-wider z-20">
                   {product.category}
                 </span>
             </div>
