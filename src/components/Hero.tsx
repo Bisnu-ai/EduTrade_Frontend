@@ -77,23 +77,12 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative min-h-[90vh] flex items-center pt-24 md:pt-32 pb-20 md:pb-32 overflow-hidden">
+    <section className="relative pt-24 md:pt-40 pb-20 md:pb-32 overflow-hidden">
       {/* Premium Background Elements */}
-      <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 bg-cover object-contain bg-center bg-no-repeat transition-transform duration-1000"
-          style={{
-            backgroundImage: "url('/bg.png')",
-            transform: "scale(1.05)"
-          }}
-        />
-        {/* Sophisticated Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background z-0" />
-        <div className="absolute inset-0 backdrop-blur-[2px] z-0" />
-
-        {/* Floating Accents */}
-        <FloatingElement delay={0} className="w-96 h-96 bg-primary/30 -top-20 -left-20" />
-        <FloatingElement delay={2} className="w-80 h-80 bg-blue-500/20 bottom-0 -right-20" />
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <FloatingElement delay={0} className="w-96 h-96 bg-primary -top-20 -left-20" />
+        <FloatingElement delay={2} className="w-80 h-80 bg-blue-500 bottom-0 -right-20" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -110,12 +99,12 @@ export default function Hero() {
             </span>
           </motion.div>
 
-          <motion.h1 variants={itemVariants} className="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9] drop-shadow-2xl">
+          <motion.h1 variants={itemVariants} className="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9]">
             Trade, Save, & <br />
             <span className="gradient-text italic font-serif">Level Up Campus</span>
           </motion.h1>
 
-          <motion.p variants={itemVariants} className="text-base md:text-xl text-foreground/80 max-w-2xl mx-auto mb-12 leading-relaxed font-semibold drop-shadow-lg">
+          <motion.p variants={itemVariants} className="text-base md:text-xl text-muted max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
             Join thousands of students trading textbooks, gadgets, and dorm essentials securely within their own college community.
           </motion.p>
 
