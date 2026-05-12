@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -6,11 +6,18 @@ import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const viewport: Viewport = {
+  themeColor: "#6366f1",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export const metadata: Metadata = {
   title: "CampusKart | Secure Campus Marketplace 🎓",
   description: "The official marketplace for college students. Buy, sell, and trade textbooks, electronics, and dorm essentials with verified students in your campus.",
   manifest: "/manifest.json",
-  themeColor: "#6366f1",
   icons: {
     icon: "/favicon.ico?v=2",
     apple: "/logo.png",
@@ -19,12 +26,6 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "black-translucent",
     title: "CampusKart",
-  },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
   },
 };
 
